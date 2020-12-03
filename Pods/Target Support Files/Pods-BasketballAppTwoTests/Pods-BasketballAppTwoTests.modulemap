@@ -1,0 +1,6 @@
+framework module Pods_BasketballAppTwoTests {
+  umbrella header "Pods-BasketballAppTwoTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
