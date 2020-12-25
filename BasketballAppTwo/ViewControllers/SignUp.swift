@@ -76,7 +76,14 @@ class SignUp: UIViewController {
                     db.collection("users").document("\(result!.user.uid)").setData(["DOB": dateOfBirth ?? 1999, "email": email, "username": Username, "currElo": 1200, "uid": uid ?? "", ])
                     db.collection("Usernames").document("\(Username)").setData(["Username": Username, "uid": uid ?? ""])
                     let docRef = db.collection("users").document("\(result!.user.uid)")
+                    let docRefTwo = db.collection("Usernames").document("\(Username)")
                     let randomID = UUID.init().uuidString
+                    docRefTwo.updateData(["imagePath" : "usr/\(randomID).jpg"]) { (error) in
+                        if error != nil {
+                            // Show error message
+                            self.showHUDWithError(error: error!)
+                        }
+                    }
                     docRef.updateData(["imagePath" : "usr/\(randomID).jpg"]) { (error) in
                         if error != nil {
                             // Show error message

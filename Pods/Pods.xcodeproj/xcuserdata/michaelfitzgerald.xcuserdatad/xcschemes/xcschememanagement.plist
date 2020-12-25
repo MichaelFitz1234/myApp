@@ -116,19 +116,24 @@
 			<key>orderHint</key>
 			<integer>15</integer>
 		</dict>
-		<key>JGProgressHUD.xcscheme</key>
+		<key>IQKeyboardManagerSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>20</integer>
 		</dict>
-		<key>LBTATools.xcscheme</key>
+		<key>JGProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>21</integer>
+		</dict>
+		<key>LBTATools.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>30</integer>
 		</dict>
 		<key>Pods-BasketballAppTwo-BasketballAppTwoUITests.xcscheme</key>
 		<dict>

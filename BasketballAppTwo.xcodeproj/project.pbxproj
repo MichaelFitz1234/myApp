@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2B741BA802B6CB0CC2DC8BA2 /* Pods_BasketballAppTwo_BasketballAppTwoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52096A13D75F79215A73CC7 /* Pods_BasketballAppTwo_BasketballAppTwoUITests.framework */; };
-		5020A962256F95E8003BC693 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5020A961256F95E8003BC693 /* GoogleService-Info.plist */; };
+		5029897B257C06E4002995B7 /* InformationRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029897A257C06E4002995B7 /* InformationRight.swift */; };
+		50298980257C0720002995B7 /* InformationLeftImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029897F257C0720002995B7 /* InformationLeftImage.swift */; };
+		502C18D0257E049C00AC64F5 /* InAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502C18CF257E049C00AC64F5 /* InAppMessaging.swift */; };
 		5039412C2566325F00DD02AA /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5039412B2566325F00DD02AA /* CardView.swift */; };
 		503941312566329200DD02AA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503941302566329100DD02AA /* User.swift */; };
 		5039413F256633EF00DD02AA /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5039413E256633EF00DD02AA /* Extensions+UIView.swift */; };
@@ -16,7 +18,14 @@
 		5039AD1E255D2737002C6366 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5039AD1D255D2736002C6366 /* SignUp.swift */; };
 		5039AD23255D309E002C6366 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5039AD22255D309D002C6366 /* ImagePicker.swift */; };
 		503BF5F6255E64D9009E42BE /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503BF5F5255E64D9009E42BE /* LoginPage.swift */; };
+		50760994257B4EDE0019ADAB /* UserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50760993257B4EDE0019ADAB /* UserInformation.swift */; };
+		507EBD8725945E1A00865662 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507EBD8625945E1A00865662 /* GoogleService-Info.plist */; };
 		50A211BA2572141F00E102BA /* homePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A211B92572141F00E102BA /* homePage.swift */; };
+		50BD2EAE258492C500899427 /* PlayerShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BD2EAD258492C500899427 /* PlayerShort.swift */; };
+		50BD2EBE2584956400899427 /* imageStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BD2EBD2584956400899427 /* imageStack.swift */; };
+		50C02ED6258F36F700DF2FC4 /* addFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C02ED5258F36F700DF2FC4 /* addFriends.swift */; };
+		50C02EDC258F3B4C00DF2FC4 /* FirebaseMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C02EDB258F3B4C00DF2FC4 /* FirebaseMessages.swift */; };
+		50C02EE92590168900DF2FC4 /* MessagesCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C02EE82590168900DF2FC4 /* MessagesCellTableViewCell.swift */; };
 		50E4BF58255CCB01001CEC48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E4BF57255CCB01001CEC48 /* AppDelegate.swift */; };
 		50E4BF5A255CCB01001CEC48 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E4BF59255CCB01001CEC48 /* SceneDelegate.swift */; };
 		50E4BF5F255CCB01001CEC48 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BF5D255CCB01001CEC48 /* Main.storyboard */; };
@@ -24,7 +33,9 @@
 		50E4BF64255CCB05001CEC48 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BF62255CCB05001CEC48 /* LaunchScreen.storyboard */; };
 		50E4BF6F255CCB05001CEC48 /* BasketballAppTwoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E4BF6E255CCB05001CEC48 /* BasketballAppTwoTests.swift */; };
 		50E4BF7A255CCB05001CEC48 /* BasketballAppTwoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E4BF79255CCB05001CEC48 /* BasketballAppTwoUITests.swift */; };
-		6908685A381197B2ABD75536 /* Pods_BasketballAppTwo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E1A00AA509072087F156A9 /* Pods_BasketballAppTwo.framework */; };
+		50E56E142594642F004C3927 /* Pods_BasketballAppTwo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E1A00AA509072087F156A9 /* Pods_BasketballAppTwo.framework */; };
+		50EF5683258DBA0700EEC842 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EF5682258DBA0700EEC842 /* Messages.swift */; };
+		50F83C82258B058F002C35E3 /* shortUsr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F83C81258B058F002C35E3 /* shortUsr.swift */; };
 		C6BCC40775DB8DEB3CAEBC9E /* Pods_BasketballAppTwoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4D0538550CE24FC29189A0 /* Pods_BasketballAppTwoTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,7 +58,9 @@
 
 /* Begin PBXFileReference section */
 		16A967BF63CB07E7428C80F9 /* Pods-BasketballAppTwoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasketballAppTwoTests.debug.xcconfig"; path = "Target Support Files/Pods-BasketballAppTwoTests/Pods-BasketballAppTwoTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5020A961256F95E8003BC693 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5029897A257C06E4002995B7 /* InformationRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationRight.swift; sourceTree = "<group>"; };
+		5029897F257C0720002995B7 /* InformationLeftImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationLeftImage.swift; sourceTree = "<group>"; };
+		502C18CF257E049C00AC64F5 /* InAppMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessaging.swift; sourceTree = "<group>"; };
 		5039412B2566325F00DD02AA /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		503941302566329100DD02AA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5039413E256633EF00DD02AA /* Extensions+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
@@ -55,7 +68,14 @@
 		5039AD1D255D2736002C6366 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		5039AD22255D309D002C6366 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		503BF5F5255E64D9009E42BE /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
+		50760993257B4EDE0019ADAB /* UserInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformation.swift; sourceTree = "<group>"; };
+		507EBD8625945E1A00865662 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50A211B92572141F00E102BA /* homePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = homePage.swift; sourceTree = "<group>"; };
+		50BD2EAD258492C500899427 /* PlayerShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerShort.swift; sourceTree = "<group>"; };
+		50BD2EBD2584956400899427 /* imageStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageStack.swift; sourceTree = "<group>"; };
+		50C02ED5258F36F700DF2FC4 /* addFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addFriends.swift; sourceTree = "<group>"; };
+		50C02EDB258F3B4C00DF2FC4 /* FirebaseMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMessages.swift; sourceTree = "<group>"; };
+		50C02EE82590168900DF2FC4 /* MessagesCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellTableViewCell.swift; sourceTree = "<group>"; };
 		50E4BF54255CCB01001CEC48 /* BasketballAppTwo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasketballAppTwo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50E4BF57255CCB01001CEC48 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50E4BF59255CCB01001CEC48 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +89,8 @@
 		50E4BF75255CCB05001CEC48 /* BasketballAppTwoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BasketballAppTwoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50E4BF79255CCB05001CEC48 /* BasketballAppTwoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketballAppTwoUITests.swift; sourceTree = "<group>"; };
 		50E4BF7B255CCB05001CEC48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50EF5682258DBA0700EEC842 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
+		50F83C81258B058F002C35E3 /* shortUsr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shortUsr.swift; sourceTree = "<group>"; };
 		53A03A1212FF6DF2B72A3E07 /* Pods-BasketballAppTwoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasketballAppTwoTests.release.xcconfig"; path = "Target Support Files/Pods-BasketballAppTwoTests/Pods-BasketballAppTwoTests.release.xcconfig"; sourceTree = "<group>"; };
 		5E9D39B6F3D4A0A2CE247B60 /* Pods-BasketballAppTwo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasketballAppTwo.release.xcconfig"; path = "Target Support Files/Pods-BasketballAppTwo/Pods-BasketballAppTwo.release.xcconfig"; sourceTree = "<group>"; };
 		5F4D0538550CE24FC29189A0 /* Pods_BasketballAppTwoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BasketballAppTwoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,7 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6908685A381197B2ABD75536 /* Pods_BasketballAppTwo.framework in Frameworks */,
+				50E56E142594642F004C3927 /* Pods_BasketballAppTwo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +139,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		50298984257C072C002995B7 /* InformationView */ = {
+			isa = PBXGroup;
+			children = (
+				5029897A257C06E4002995B7 /* InformationRight.swift */,
+				5029897F257C0720002995B7 /* InformationLeftImage.swift */,
+				50C02EE82590168900DF2FC4 /* MessagesCellTableViewCell.swift */,
+			);
+			path = InformationView;
+			sourceTree = "<group>";
+		};
 		5039412225662F5700DD02AA /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +156,10 @@
 				5039AD1D255D2736002C6366 /* SignUp.swift */,
 				503BF5F5255E64D9009E42BE /* LoginPage.swift */,
 				50A211B92572141F00E102BA /* homePage.swift */,
+				50760993257B4EDE0019ADAB /* UserInformation.swift */,
+				50EF5682258DBA0700EEC842 /* Messages.swift */,
+				502C18CF257E049C00AC64F5 /* InAppMessaging.swift */,
+				50C02ED5258F36F700DF2FC4 /* addFriends.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -133,6 +169,9 @@
 			children = (
 				5039AD22255D309D002C6366 /* ImagePicker.swift */,
 				503941302566329100DD02AA /* User.swift */,
+				50F83C81258B058F002C35E3 /* shortUsr.swift */,
+				50BD2EAD258492C500899427 /* PlayerShort.swift */,
+				50C02EDB258F3B4C00DF2FC4 /* FirebaseMessages.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -140,7 +179,9 @@
 		5039412A2566325300DD02AA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				50298984257C072C002995B7 /* InformationView */,
 				5039412B2566325F00DD02AA /* CardView.swift */,
+				50BD2EBD2584956400899427 /* imageStack.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -195,7 +236,7 @@
 				50E4BF60255CCB05001CEC48 /* Assets.xcassets */,
 				50E4BF62255CCB05001CEC48 /* LaunchScreen.storyboard */,
 				50E4BF65255CCB05001CEC48 /* Info.plist */,
-				5020A961256F95E8003BC693 /* GoogleService-Info.plist */,
+				507EBD8625945E1A00865662 /* GoogleService-Info.plist */,
 				5039413D256633EF00DD02AA /* Extensions */,
 			);
 			path = BasketballAppTwo;
@@ -341,7 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50E4BF64255CCB05001CEC48 /* LaunchScreen.storyboard in Resources */,
-				5020A962256F95E8003BC693 /* GoogleService-Info.plist in Resources */,
+				507EBD8725945E1A00865662 /* GoogleService-Info.plist in Resources */,
 				50E4BF61255CCB05001CEC48 /* Assets.xcassets in Resources */,
 				50E4BF5F255CCB01001CEC48 /* Main.storyboard in Resources */,
 			);
@@ -471,16 +512,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50EF5683258DBA0700EEC842 /* Messages.swift in Sources */,
 				50E4BF58255CCB01001CEC48 /* AppDelegate.swift in Sources */,
+				502C18D0257E049C00AC64F5 /* InAppMessaging.swift in Sources */,
+				5029897B257C06E4002995B7 /* InformationRight.swift in Sources */,
 				5039413F256633EF00DD02AA /* Extensions+UIView.swift in Sources */,
 				5039AD1E255D2737002C6366 /* SignUp.swift in Sources */,
+				50F83C82258B058F002C35E3 /* shortUsr.swift in Sources */,
+				50C02ED6258F36F700DF2FC4 /* addFriends.swift in Sources */,
+				50BD2EBE2584956400899427 /* imageStack.swift in Sources */,
 				5039AD23255D309E002C6366 /* ImagePicker.swift in Sources */,
+				50C02EDC258F3B4C00DF2FC4 /* FirebaseMessages.swift in Sources */,
+				50298980257C0720002995B7 /* InformationLeftImage.swift in Sources */,
 				50E4BF5A255CCB01001CEC48 /* SceneDelegate.swift in Sources */,
+				50760994257B4EDE0019ADAB /* UserInformation.swift in Sources */,
+				50BD2EAE258492C500899427 /* PlayerShort.swift in Sources */,
 				50A211BA2572141F00E102BA /* homePage.swift in Sources */,
 				503BF5F6255E64D9009E42BE /* LoginPage.swift in Sources */,
 				503941312566329200DD02AA /* User.swift in Sources */,
 				5039AD12255CDF63002C6366 /* LoginOrSignUp.swift in Sources */,
 				5039412C2566325F00DD02AA /* CardView.swift in Sources */,
+				50C02EE92590168900DF2FC4 /* MessagesCellTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +622,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -586,7 +639,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -631,6 +684,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -641,7 +695,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -657,15 +711,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 38Q3U33NVN;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 5N94526AQY;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BasketballAppTwo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.fitzgerald.BasketballAppTwo;
+				PRODUCT_BUNDLE_IDENTIFIER = me2.fitzgerald.BasketballAppTwo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -678,13 +736,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 38Q3U33NVN;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 5N94526AQY;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BasketballAppTwo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.fitzgerald.BasketballAppTwo;
+				PRODUCT_BUNDLE_IDENTIFIER = me2.fitzgerald.BasketballAppTwo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

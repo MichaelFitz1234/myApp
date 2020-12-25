@@ -6,19 +6,173 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseStorage
+import FirebaseFirestore
+import FirebaseAuth
 import SDWebImage
 import JGProgressHUD
 
-class homePage: UIViewController, CardViewDelegate {
-    let searchBarView = UIView()
+class homePage: UIViewController, CardViewDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
+    var data: [String] = []
+    var filteredData: [String]!
+    //var searching = false
+    let tblview = UITableView()
+    let searchBarView = UISearchBar()
+    var searchedIsClear = true
     fileprivate var myView = UIView()
-   //let users = [User(name: "Michael", age: 25, Elo: 1200, imageName: #imageLiteral(resourceName: "BballPlayer")), User(name: "Rachael", age: 33, Elo: 1100, imageName: #imageLiteral(resourceName: "shootingImageInitialPage")), User(name: "Eli", age: 22, Elo: 1500, imageName: #imageLiteral(resourceName: "shootingImageInitialPage")), User(name: "Kelly", age: 22, Elo: 1500, imageName: #imageLiteral(resourceName: "Image-1")),User(name: "Lady", age: 22, Elo: 1500, imageName: #imageLiteral(resourceName: "bbal1"))]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        currentUsrInfo()
         setUpLayout()
         getUsersFromFiresbase()
+        searchBarView.delegate = self
+        tblview.register(UITableViewCell.self, forCellReuseIdentifier: "TableCell")
+        tblview.dataSource = self
+        tblview.delegate = self
+        searchUsersFromFirestore()
+        filteredData = data
     }
+    var myUser:User!
+    func getMyUser() -> User{
+        return myUser
+    }
+    func currentUsrInfo(){
+        let currentUsrId = Auth.auth().currentUser?.uid ?? ""
+        let db2 = Firestore.firestore().collection("users").document(currentUsrId)
+        db2.getDocument { (snapshot, error) in
+            let myUserInfo = snapshot?.data()
+            let user = User(dictionary: myUserInfo!)
+            self.myUser = user
+        }
+    }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+            view.addSubview(tblview)
+            self.tblview.separatorStyle = UITableViewCell.SeparatorStyle.none
+            tblview.anchor(top: searchBarView.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
+            view.bringSubviewToFront(tblview)
+          
+        searchBar.setShowsCancelButton(true, animated: true)
+        //searchBarView.showsCancelButton = true
+    }
+    fileprivate func searchUsersFromFirestore(){
+        let query = Firestore.firestore().collection("Usernames")
+        query.getDocuments { (snapshot, err) in
+            if let err = err{
+              print("this is the", err)
+              return
+            }else{
+                snapshot?.documents.forEach({ (documentSnapshot) in
+                    let myUserInfo = documentSnapshot.data()
+                    let user = shortUsr(dictionary: myUserInfo)
+                    let string = user.Username as String? ?? ""
+                    self.data.append(string)
+                })
+            }
+        }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredData.count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let registeringHUD = JGProgressHUD(style: .dark)
+        registeringHUD.textLabel.text = "Fetching User"
+        registeringHUD.show(in: self.view)
+        let usrname = filteredData[indexPath.row]
+        let query = Firestore.firestore().collection("Usernames").document("\(usrname)")
+        query.getDocument { (documentSnapshot, error) in
+            let uid = documentSnapshot?.get("uid")
+            let docRef = Firestore.firestore().collection("users").document("\(uid ?? "")")
+            docRef.getDocument { (documentSnapshot, error) in
+                let myUserInfo = documentSnapshot?.data()
+                let user = User(dictionary: myUserInfo!)
+                let cardDeck = self.CardViewFromUser(user: user)
+                self.tblview.removeFromSuperview()
+                self.searchBarView.setShowsCancelButton(false, animated: true)
+                self.searchBarView.text = ""
+                self.searchBarView.endEditing(true)
+                self.insertUsr(Card: cardDeck)
+                //self.cardDeckHead?.removxeFromSuperview()
+                self.myView.addSubview(self.cardDeckHead ?? self.fillerUIView)
+                self.cardDeckHead?.fillSuperview()
+                self.cardDeckHead?.delegate = self
+                registeringHUD.dismiss()
+           }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let myImg = UIImageView()
+        let myLabel = UILabel()
+        myLabel.backgroundColor = .white
+        myImg.backgroundColor = .gray
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as UITableViewCell
+        let query = Firestore.firestore().collection("Usernames").document("\(filteredData[indexPath.row])")
+        query.getDocument { (documentSnapshot, error) in
+            let imgPath = documentSnapshot?.get("imagePath")
+            let storageRef = Storage.storage().reference(withPath: imgPath as! String)
+            storageRef.getData(maxSize: 4*1024*1024) { (data, error) in
+            if let error = error{
+            print("Got an error fetching data: \(error.localizedDescription)")
+                return
+                }else{
+            if let data = data{
+                myImg.image = UIImage(data: data)
+                myImg.image?.withRenderingMode(.alwaysOriginal)
+                myImg.contentMode = .scaleAspectFill
+                return
+                        }
+                    }
+                }
+        }
+        myImg.layer.masksToBounds = true
+        myImg.layer.cornerRadius = 20
+        cell.addSubview(myImg)
+        cell.addSubview(myLabel)
+        myImg.anchor(top: cell.topAnchor, leading: cell.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 10, left: 10, bottom: 0, right: 0), size: .init(width: 40, height: 40))
+        myLabel.anchor(top: cell.topAnchor, leading: myImg.trailingAnchor, bottom: cell.bottomAnchor, trailing: cell.trailingAnchor, padding: .init(top: 10, left: 4, bottom: 0, right: 0))
+        myLabel.text = filteredData[indexPath.row]
+        myLabel.textColor = .systemGray2
+        myLabel.font = .systemFont(ofSize: 15, weight: UIFont.Weight(rawValue: 10))
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        return cell
+    }
+     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+        searchBar.setShowsCancelButton(false, animated: true)
+        // Remove focus from the search bar.
+        tblview.removeFromSuperview()
+        searchBar.endEditing(true)
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //searchBarView.showsCancelButton = true
+        if (searchText.isEmpty == false){
+            view.addSubview(tblview)
+            self.tblview.separatorStyle = UITableViewCell.SeparatorStyle.none
+            tblview.anchor(top: searchBarView.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
+            view.bringSubviewToFront(tblview)
+            filteredData = data.filter({(dataString: String) -> Bool in
+                 return dataString.range(of: searchText, options: .caseInsensitive) != nil
+            })
+        }  else if (searchText.isEmpty == true){
+           filteredData = []
+        }
+        tblview.reloadData()
+    }
+    
     var lastAddedPointer: CardView?
     var cardDeckHead: CardView?
     var nextCardInstantiation: CardView?
@@ -35,18 +189,49 @@ class homePage: UIViewController, CardViewDelegate {
             lastAddedPointer?.nextCard = nil
         }
     }
+    fileprivate func insertUsr(Card: CardView){
+        let tempNode = cardDeckHead
+        cardDeckHead = Card
+        cardDeckHead?.nextCard = tempNode?.nextCard
+        tempNode?.nextCard = Card
+        cardDeckHead?.previousCard = tempNode
+        tempNode?.previousCard?.removeFromSuperview()
+        //cardDeckHead?.previousCard = cardDeckHead?.previousCard?.previousCard
+    }
     let fillerUIView = UIView()
     let dummycard = CardView()
     var users = [User]()
-    
+//    func calcAge(birthday: String) -> Int {
+//        let dateFormater = DateFormatter()
+//        dateFormater.dateFormat = "MM/dd/yyyy"
+//        let birthdayDate = dateFormater.date(from: birthday)
+//        let calendar: NSCalendar! = NSCalendar(calendarIdentifier: .gregorian)
+//        let now = Date()
+//        let calcAge = calendar.components(.year, from: birthdayDate!, to: now, options: [])
+//        let age = calcAge.year
+//        return age!
+//    }
+//    func stringFromDate(_ date: Date) -> String {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "dd MMM yyyy HH:mm" //yyyy
+//        return formatter.string(from: date)
+//    }
     fileprivate func CardViewFromUser(user: User) -> CardView{
-        let myDate = NSDate()
         let cardDeckView = CardView()
-        cardDeckView.locationUsername.text = "\(user.Username ?? "")  \(user.age ?? myDate) \n 22 miles away"
+        //let myString = stringFromDate(user.age! as Date)
+        //let finalAge = calcAge(birthday: myString)
+        cardDeckView.uid = user.uid ?? ""
+        cardDeckView.UsrName = user.Username ?? ""
+        cardDeckView.locationUsername.text = "\(user.Username ?? "")  \(21) \n 22 miles away"
         cardDeckView.Elo.text = " \(user.Elo ?? 5) \n Some Ranking"
         cardDeckView.imageUrl = user.imageUrl ?? ""
         return cardDeckView
     }
+    func didTapMoreInfo(){
+        let myController = UserInformation()
+        present(myController, animated: true)
+    }
+    
     fileprivate func getUsersFromFiresbase(){
         let query = Firestore.firestore().collection("users")
         query.getDocuments { (snapshot, err) in
@@ -131,7 +316,6 @@ class homePage: UIViewController, CardViewDelegate {
             temp?.transform = .identity
             self.cardDeckHead?.removeFromSuperview()
             self.cardDeckHead = self.cardDeckHead?.previousCard
-            //self.cardDeckHead?.previousCard?.lastCardSetup()
             self.cardDeckHead?.delegate = self
             temp?.nextCardSetup()
             self.cardDeckHead?.nextCard = temp
@@ -152,10 +336,16 @@ class homePage: UIViewController, CardViewDelegate {
         let overallStackView = UIStackView(arrangedSubviews: [myView])
         overallStackView.axis = .vertical
         view.addSubview(overallStackView)
-        //searchBarView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: ScreenWidth, height: 200))
+        view.addSubview(searchBarView)
         overallStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
         overallStackView.isLayoutMarginsRelativeArrangement = true
         overallStackView.layoutMargins = .init(top: 85, left: 13, bottom: 15, right: 13)
         overallStackView.bringSubviewToFront(myView)
+        searchBarView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: nil, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        searchBarView.searchBarStyle = .minimal
+        searchBarView.placeholder = "search for friends"
         }
     }
+
+    
+

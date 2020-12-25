@@ -8,12 +8,17 @@
 import UIKit
 import SDWebImage
 import FirebaseStorage
+import FirebaseAuth
+import FirebaseFirestore
 protocol CardViewDelegate {
     func nextCardRight(translation: CGFloat)
     func nextCardLeft(translation: CGFloat)
+    func didTapMoreInfo()
+    func getMyUser() -> User
 }
 
 class CardView: UIView {
+    var UsrName = ""
     var imageUrl = ""{
     didSet {
         let storageRef = Storage.storage().reference(withPath: imageUrl)
@@ -32,6 +37,7 @@ class CardView: UIView {
             }
         }
     }
+    var uid = ""
     var nextCard: CardView?
     var previousCard: CardView?
     var delegate: CardViewDelegate?
@@ -50,12 +56,39 @@ class CardView: UIView {
         button.layer.cornerRadius = 8
         button.setTitle("Follow", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(followHit), for: .touchUpInside)
         return button
     }()
+    var count = 0;
+    @objc fileprivate func followHit(){
+        let db = Firestore.firestore().collection("users")
+        let currentUsr = self.delegate?.getMyUser()
+        count = count + 1
+        let color1 = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        if count % 2 == 0{
+            followButton.setTitle("Follow", for: .normal)
+            followButton.backgroundColor = color1
+            followButton.setTitleColor(.white, for: .normal)
+            db.document(currentUsr?.uid ?? "").collection("Friends").document(uid).delete()
+            db.document(uid).collection("Friends").document(currentUsr?.uid ?? "").delete()
+        }else{
+            followButton.setTitle("Unfollow", for: .normal)
+            followButton.backgroundColor = .white
+            followButton.setTitleColor(color1, for: .normal)
+            db.document(currentUsr?.uid ?? "").collection("Friends").document(uid).setData(["uid": uid, "imagePath": imageUrl, "Username" : UsrName])
+            db.document(uid).collection("Friends").document(currentUsr?.uid ?? "").setData(["uid" : currentUsr?.uid ?? "", "imagePath": currentUsr?.imageUrl ?? "", "Username" : currentUsr?.Username ?? ""] )
+        }
+    }
+    
+    
+    @objc fileprivate func moreInfoHit(){
+        delegate?.didTapMoreInfo()
+    }
     fileprivate let moreInfoButton: UIButton = {
         let button = UIButton(type: .system)
         let image = UIImage(imageLiteralResourceName: "info_icon")
         button.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(moreInfoHit), for: .touchUpInside)
         return button
     }()
 //    fileprivate func setUpImagefromDatabase(){

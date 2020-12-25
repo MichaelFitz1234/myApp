@@ -12,7 +12,7 @@ target 'BasketballAppTwo' do
   pod 'Firebase/Storage'
   pod 'Firebase/Firestore'
   pod 'JGProgressHUD'
-  pod 'LBTATools'
+  pod 'IQKeyboardManagerSwift'
   pod 'SDWebImage'
   target 'BasketballAppTwoTests' do
     inherit! :search_paths
