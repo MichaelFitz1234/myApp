@@ -57,17 +57,19 @@ class Messages: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
                         self.messageNum = self.messageNum + 1
                         self.mytblView.reloadData()
                         self.scrollToBottom(animated: true)
+                        self.shouldScroll = true
                         }
                        }
             }
             }
         }
     }
+    var shouldScroll = true
     var height = CGFloat(0)
     let myUser = Auth.auth().currentUser?.uid
     var booleanFirstTime = false
     var messageNum = 0
-    var textMessages = [ChatMessages(dictionary: ["timestamp": Date() , "incoming" : false, "": "firstMessage"])]
+    var textMessages = [ChatMessages]()
     let topNavigation = UIView()
     let backButton = UIButton()
     let usrImage = UIImageView()
@@ -111,6 +113,10 @@ class Messages: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
             db.collection("Messages").document("m\(messageNum)").setData(["timestamp" : timeStamp, "incoming": false, "Message": txtField.text!])
             let db2 = Firestore.firestore().collection("users").document(uid ).collection("Friends").document(myUser ?? "")
             db2.collection("Messages").document("m\(messageNum)").setData(["timestamp" : timeStamp, "incoming": true, "Message": txtField.text!])
+            db.updateData(["lastMsg" : txtField.text!])
+            db2.updateData(["lastMsg" : txtField.text!])
+            db.updateData(["timestamp" : timeStamp])
+            db2.updateData(["timestamp" : timeStamp])
             txtField.text = ""
             mytblView.reloadData()
            scrollToBottom(animated: true)
@@ -149,7 +155,6 @@ class Messages: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
                     }
         }
     }
-
     @objc func tapFunction(sender:UITapGestureRecognizer) {
         let timeStamp = Date()
         messageNum = messageNum + 1
@@ -158,6 +163,12 @@ class Messages: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
         db.collection("Messages").document("m\(messageNum)").setData(["timestamp" : timeStamp, "incoming": false, "Message": txtField.text!])
         let db2 = Firestore.firestore().collection("users").document(uid ).collection("Friends").document(myUser ?? "")
         db2.collection("Messages").document("m\(messageNum)").setData(["timestamp" : timeStamp, "incoming": true, "Message": txtField.text!])
+        db.updateData(["lastMsg" : txtField.text!])
+        db2.updateData(["lastMsg" : txtField.text!])
+        db.updateData(["timestamp" : timeStamp])
+        db2.updateData(["timestamp" : timeStamp])
+        //db.setData(["timestamp" : timeStamp], mergeFields: ["timestamp"])
+        //db2.setData(["timestamp" : timeStamp], mergeFields: ["timestamp"])
         txtField.text = ""
         mytblView.reloadData()
         scrollToBottom(animated: true)
@@ -166,7 +177,9 @@ class Messages: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     func scrollToBottom(animated: Bool){
         DispatchQueue.main.async {
             let indexPath = IndexPath(row: self.textMessages.count-1, section: 0)
+            if(self.shouldScroll == true){
             self.mytblView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+            }
         }
     }
     var BottomVal = 8
@@ -238,13 +251,15 @@ class Messages: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "id", for: indexPath) as! MessagesCellTableViewCell
+        cell.selectionStyle = .none
         cell.messageLabel.text = textMessages[indexPath.row].message
         cell.isIncomming = textMessages[indexPath.row].incoming
         return cell
     }
 
     @objc fileprivate func Click(){
-    let messView = InAppMessaging()
+    let messView = myTabBarController()
+    messView.selectedIndex = 1
     messView.modalPresentationStyle = .fullScreen
     let transition = CATransition()
     transition.duration = 0.2

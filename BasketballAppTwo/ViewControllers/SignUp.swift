@@ -167,10 +167,9 @@ class SignUp: UIViewController {
     
     //this is used to transitino to the homescreen
     func transitionToHome() {
-        let HomeViewController = self.storyboard?.instantiateViewController(identifier: "homePage")
-        self.view.window?.rootViewController = HomeViewController
-        self.view.window?.makeKeyAndVisible()
-
+        let messView = myTabBarController()
+        messView.modalPresentationStyle = .fullScreen
+        present(messView, animated: false, completion: nil)
     }
     
 }

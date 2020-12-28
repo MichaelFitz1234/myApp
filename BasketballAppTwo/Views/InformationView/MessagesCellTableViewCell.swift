@@ -18,8 +18,6 @@ class MessagesCellTableViewCell: UITableViewCell {
             messageLabel.textColor = isIncomming ? .black : .white
             constraint1.isActive = isIncomming ? true : false
             constraint2.isActive = isIncomming ? false : true
-            //constraint1.isActive = false
-            //constraint2.isActive = true
         }
     }
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

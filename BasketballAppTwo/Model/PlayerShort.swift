@@ -7,15 +7,15 @@
 
 
 import Foundation
-
+import FirebaseFirestore
 struct PlayerShort {
-    let name, profileImageUrl, uid: String
-    var lastMsg: String?, timestamp: Date?
+    let Username, profileImageUrl, uid: String
+    var lastMsg: String?, timestamp: Timestamp?
     init(dictionary: [String: Any]) {
-        self.name = dictionary["name"] as? String ?? ""
-        self.profileImageUrl = dictionary["profileImageUrl"] as? String ?? ""
+        self.Username = dictionary["Username"] as? String ?? ""
+        self.profileImageUrl = dictionary["imagePath"] as? String ?? ""
         self.uid = dictionary["uid"] as? String ?? ""
-        self.lastMsg = dictionary["lastMsg"] as? String
-        self.timestamp = dictionary["timestamp"] as? Date
+        self.lastMsg = dictionary["lastMsg"] as? String ?? ""
+        self.timestamp = dictionary["timestamp"] as? Timestamp
     }
 }

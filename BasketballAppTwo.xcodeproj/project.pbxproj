@@ -11,6 +11,10 @@
 		5029897B257C06E4002995B7 /* InformationRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029897A257C06E4002995B7 /* InformationRight.swift */; };
 		50298980257C0720002995B7 /* InformationLeftImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029897F257C0720002995B7 /* InformationLeftImage.swift */; };
 		502C18D0257E049C00AC64F5 /* InAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502C18CF257E049C00AC64F5 /* InAppMessaging.swift */; };
+		502DFED8259994FD00BF9102 /* AddMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DFED7259994FD00BF9102 /* AddMessageCell.swift */; };
+		502DFEDD2599B0E900BF9102 /* SocialPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DFEDC2599B0E900BF9102 /* SocialPage.swift */; };
+		5038DC732598627B0069E415 /* plusButtonHitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038DC722598627B0069E415 /* plusButtonHitViewController.swift */; };
+		5038DC78259868810069E415 /* myTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038DC77259868810069E415 /* myTabBarController.swift */; };
 		5039412C2566325F00DD02AA /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5039412B2566325F00DD02AA /* CardView.swift */; };
 		503941312566329200DD02AA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503941302566329100DD02AA /* User.swift */; };
 		5039413F256633EF00DD02AA /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5039413E256633EF00DD02AA /* Extensions+UIView.swift */; };
@@ -20,10 +24,10 @@
 		503BF5F6255E64D9009E42BE /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503BF5F5255E64D9009E42BE /* LoginPage.swift */; };
 		50760994257B4EDE0019ADAB /* UserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50760993257B4EDE0019ADAB /* UserInformation.swift */; };
 		507EBD8725945E1A00865662 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507EBD8625945E1A00865662 /* GoogleService-Info.plist */; };
+		5083D82F2595DA7F00EB6B19 /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5083D82E2595DA7E00EB6B19 /* ContactsCell.swift */; };
 		50A211BA2572141F00E102BA /* homePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A211B92572141F00E102BA /* homePage.swift */; };
 		50BD2EAE258492C500899427 /* PlayerShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BD2EAD258492C500899427 /* PlayerShort.swift */; };
 		50BD2EBE2584956400899427 /* imageStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BD2EBD2584956400899427 /* imageStack.swift */; };
-		50C02ED6258F36F700DF2FC4 /* addFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C02ED5258F36F700DF2FC4 /* addFriends.swift */; };
 		50C02EDC258F3B4C00DF2FC4 /* FirebaseMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C02EDB258F3B4C00DF2FC4 /* FirebaseMessages.swift */; };
 		50C02EE92590168900DF2FC4 /* MessagesCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C02EE82590168900DF2FC4 /* MessagesCellTableViewCell.swift */; };
 		50E4BF58255CCB01001CEC48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E4BF57255CCB01001CEC48 /* AppDelegate.swift */; };
@@ -61,6 +65,10 @@
 		5029897A257C06E4002995B7 /* InformationRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationRight.swift; sourceTree = "<group>"; };
 		5029897F257C0720002995B7 /* InformationLeftImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationLeftImage.swift; sourceTree = "<group>"; };
 		502C18CF257E049C00AC64F5 /* InAppMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessaging.swift; sourceTree = "<group>"; };
+		502DFED7259994FD00BF9102 /* AddMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMessageCell.swift; sourceTree = "<group>"; };
+		502DFEDC2599B0E900BF9102 /* SocialPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialPage.swift; sourceTree = "<group>"; };
+		5038DC722598627B0069E415 /* plusButtonHitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = plusButtonHitViewController.swift; sourceTree = "<group>"; };
+		5038DC77259868810069E415 /* myTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myTabBarController.swift; sourceTree = "<group>"; };
 		5039412B2566325F00DD02AA /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		503941302566329100DD02AA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5039413E256633EF00DD02AA /* Extensions+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
@@ -70,10 +78,10 @@
 		503BF5F5255E64D9009E42BE /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
 		50760993257B4EDE0019ADAB /* UserInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformation.swift; sourceTree = "<group>"; };
 		507EBD8625945E1A00865662 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5083D82E2595DA7E00EB6B19 /* ContactsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
 		50A211B92572141F00E102BA /* homePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = homePage.swift; sourceTree = "<group>"; };
 		50BD2EAD258492C500899427 /* PlayerShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerShort.swift; sourceTree = "<group>"; };
 		50BD2EBD2584956400899427 /* imageStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageStack.swift; sourceTree = "<group>"; };
-		50C02ED5258F36F700DF2FC4 /* addFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addFriends.swift; sourceTree = "<group>"; };
 		50C02EDB258F3B4C00DF2FC4 /* FirebaseMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMessages.swift; sourceTree = "<group>"; };
 		50C02EE82590168900DF2FC4 /* MessagesCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCellTableViewCell.swift; sourceTree = "<group>"; };
 		50E4BF54255CCB01001CEC48 /* BasketballAppTwo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasketballAppTwo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +153,8 @@
 				5029897A257C06E4002995B7 /* InformationRight.swift */,
 				5029897F257C0720002995B7 /* InformationLeftImage.swift */,
 				50C02EE82590168900DF2FC4 /* MessagesCellTableViewCell.swift */,
+				5083D82E2595DA7E00EB6B19 /* ContactsCell.swift */,
+				502DFED7259994FD00BF9102 /* AddMessageCell.swift */,
 			);
 			path = InformationView;
 			sourceTree = "<group>";
@@ -153,13 +163,15 @@
 			isa = PBXGroup;
 			children = (
 				5039AD11255CDF63002C6366 /* LoginOrSignUp.swift */,
+				502DFEDC2599B0E900BF9102 /* SocialPage.swift */,
+				5038DC77259868810069E415 /* myTabBarController.swift */,
 				5039AD1D255D2736002C6366 /* SignUp.swift */,
 				503BF5F5255E64D9009E42BE /* LoginPage.swift */,
 				50A211B92572141F00E102BA /* homePage.swift */,
 				50760993257B4EDE0019ADAB /* UserInformation.swift */,
 				50EF5682258DBA0700EEC842 /* Messages.swift */,
 				502C18CF257E049C00AC64F5 /* InAppMessaging.swift */,
-				50C02ED5258F36F700DF2FC4 /* addFriends.swift */,
+				5038DC722598627B0069E415 /* plusButtonHitViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -513,13 +525,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				50EF5683258DBA0700EEC842 /* Messages.swift in Sources */,
+				5038DC78259868810069E415 /* myTabBarController.swift in Sources */,
 				50E4BF58255CCB01001CEC48 /* AppDelegate.swift in Sources */,
 				502C18D0257E049C00AC64F5 /* InAppMessaging.swift in Sources */,
 				5029897B257C06E4002995B7 /* InformationRight.swift in Sources */,
 				5039413F256633EF00DD02AA /* Extensions+UIView.swift in Sources */,
 				5039AD1E255D2737002C6366 /* SignUp.swift in Sources */,
 				50F83C82258B058F002C35E3 /* shortUsr.swift in Sources */,
-				50C02ED6258F36F700DF2FC4 /* addFriends.swift in Sources */,
 				50BD2EBE2584956400899427 /* imageStack.swift in Sources */,
 				5039AD23255D309E002C6366 /* ImagePicker.swift in Sources */,
 				50C02EDC258F3B4C00DF2FC4 /* FirebaseMessages.swift in Sources */,
@@ -527,11 +539,15 @@
 				50E4BF5A255CCB01001CEC48 /* SceneDelegate.swift in Sources */,
 				50760994257B4EDE0019ADAB /* UserInformation.swift in Sources */,
 				50BD2EAE258492C500899427 /* PlayerShort.swift in Sources */,
+				5038DC732598627B0069E415 /* plusButtonHitViewController.swift in Sources */,
 				50A211BA2572141F00E102BA /* homePage.swift in Sources */,
 				503BF5F6255E64D9009E42BE /* LoginPage.swift in Sources */,
 				503941312566329200DD02AA /* User.swift in Sources */,
 				5039AD12255CDF63002C6366 /* LoginOrSignUp.swift in Sources */,
 				5039412C2566325F00DD02AA /* CardView.swift in Sources */,
+				502DFEDD2599B0E900BF9102 /* SocialPage.swift in Sources */,
+				502DFED8259994FD00BF9102 /* AddMessageCell.swift in Sources */,
+				5083D82F2595DA7F00EB6B19 /* ContactsCell.swift in Sources */,
 				50C02EE92590168900DF2FC4 /* MessagesCellTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

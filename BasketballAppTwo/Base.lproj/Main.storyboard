@@ -294,99 +294,11 @@
             </objects>
             <point key="canvasLocation" x="-452.17391304347831" y="-33.482142857142854"/>
         </scene>
-        <!--Message-->
-        <scene sceneID="tz8-Sp-Jr0">
-            <objects>
-                <viewController id="Hnv-C6-3dA" customClass="InAppMessaging" customModule="BasketballAppTwo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="4bW-3A-Cwr">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="skx-Ad-w1l"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Message" image="message" catalog="system" id="Vox-fo-MQ0"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ny5-zu-VlW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1296" y="-15"/>
-        </scene>
-        <!--Search-->
-        <scene sceneID="xx3-Go-dH0">
-            <objects>
-                <viewController id="fGZ-l8-dB8" customClass="homePage" customModule="BasketballAppTwo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="yMP-lA-BoW">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="mc4-Ea-wNJ"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="7m4-EV-9Yk"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dOt-xd-IqM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1296" y="-724"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="Lf4-XY-X3E">
-            <objects>
-                <tabBarController storyboardIdentifier="homePage" id="pMY-rt-gbF" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="SNU-ZU-KPF">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="fGZ-l8-dB8" kind="relationship" relationship="viewControllers" id="TKp-hG-xDd"/>
-                        <segue destination="Hnv-C6-3dA" kind="relationship" relationship="viewControllers" id="n9R-iO-0sP"/>
-                        <segue destination="X6e-Sh-Ji9" kind="relationship" relationship="viewControllers" id="UlR-gS-n36"/>
-                        <segue destination="iJG-EX-GFm" kind="relationship" relationship="viewControllers" id="U4N-Kf-HPe"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DYP-po-Ru9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="342" y="-368"/>
-        </scene>
-        <!--Leaderboard-->
-        <scene sceneID="g5m-QN-NZv">
-            <objects>
-                <viewController id="X6e-Sh-Ji9" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="JWc-TY-ZRv">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="BSC-y5-T01"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Leaderboard" image="star.leadinghalf.fill" catalog="system" id="s62-56-5bk"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="faZ-3M-ou6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1296" y="674"/>
-        </scene>
-        <!--Challenges-->
-        <scene sceneID="VdN-HR-hcc">
-            <objects>
-                <viewController id="iJG-EX-GFm" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="j2h-em-XQY">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="OLA-ak-9hq"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Challenges" image="map.fill" catalog="system" id="v1P-vH-qhE"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="K7f-Gz-UVY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1296" y="1351"/>
-        </scene>
     </scenes>
     <resources>
         <image name="lock" catalog="system" width="128" height="128"/>
-        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
-        <image name="map.fill" catalog="system" width="128" height="110"/>
-        <image name="message" catalog="system" width="128" height="113"/>
         <image name="person.circle.fill" catalog="system" width="128" height="121"/>
         <image name="shootingImage" width="166.5" height="166.5"/>
-        <image name="star.leadinghalf.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

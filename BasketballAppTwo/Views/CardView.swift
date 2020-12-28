@@ -75,8 +75,9 @@ class CardView: UIView {
             followButton.setTitle("Unfollow", for: .normal)
             followButton.backgroundColor = .white
             followButton.setTitleColor(color1, for: .normal)
-            db.document(currentUsr?.uid ?? "").collection("Friends").document(uid).setData(["uid": uid, "imagePath": imageUrl, "Username" : UsrName])
-            db.document(uid).collection("Friends").document(currentUsr?.uid ?? "").setData(["uid" : currentUsr?.uid ?? "", "imagePath": currentUsr?.imageUrl ?? "", "Username" : currentUsr?.Username ?? ""] )
+            let timestamp = Date()
+            db.document(currentUsr?.uid ?? "").collection("Friends").document(uid).setData(["uid": uid, "imagePath": imageUrl, "Username" : UsrName, "lastMsg" : "", "timestamp": timestamp])
+            db.document(uid).collection("Friends").document(currentUsr?.uid ?? "").setData(["uid" : currentUsr?.uid ?? "", "imagePath": currentUsr?.imageUrl ?? "", "Username" : currentUsr?.Username ?? "", "lastMsg" : "", "timestamp": timestamp] )
         }
     }
     
