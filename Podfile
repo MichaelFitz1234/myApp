@@ -6,7 +6,6 @@ target 'BasketballAppTwo' do
   use_frameworks!
   pod "CardSlider"
   # Pods for BasketballAppTwo
-  pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'

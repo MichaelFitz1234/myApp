@@ -92,19 +92,8 @@ class CardView: UIView {
         button.addTarget(self, action: #selector(moreInfoHit), for: .touchUpInside)
         return button
     }()
-//    fileprivate func setUpImagefromDatabase(){
-//        layer.borderColor = .init(red: 0, green: 0, blue: 140, alpha: 0.75)
-//        layer.cornerRadius = 10
-//        clipsToBounds = true
-//        addSubview(Userimage)
-//        sendSubviewToBack(Userimage)
-//        Userimage.fillSuperview()
-//    }
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //setupLayout()
-        // rotation
-        // some not that scary math here to convert radians to degrees
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(panGesture)
     }

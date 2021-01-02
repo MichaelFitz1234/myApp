@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		2B741BA802B6CB0CC2DC8BA2 /* Pods_BasketballAppTwo_BasketballAppTwoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52096A13D75F79215A73CC7 /* Pods_BasketballAppTwo_BasketballAppTwoUITests.framework */; };
+		4C20C819259C1D81001F68CC /* ConfirmScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20C818259C1D81001F68CC /* ConfirmScore.swift */; };
+		4C20C81E259C3C0E001F68CC /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20C81D259C3C0E001F68CC /* Friends.swift */; };
+		4C20C823259C635E001F68CC /* MapsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20C822259C635E001F68CC /* MapsController.swift */; };
+		4C643DD325A0260400F7B8BB /* FullPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C643DD225A0260400F7B8BB /* FullPlayerView.swift */; };
+		4C985BCF259E9574009F29CE /* NavigationSocial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C985BCE259E9574009F29CE /* NavigationSocial.swift */; };
+		4C985BD7259E97BD009F29CE /* FollowersPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C985BD6259E97BD009F29CE /* FollowersPage.swift */; };
+		4C985BE0259EA151009F29CE /* NotificationsSocialPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C985BDF259EA151009F29CE /* NotificationsSocialPage.swift */; };
 		5029897B257C06E4002995B7 /* InformationRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029897A257C06E4002995B7 /* InformationRight.swift */; };
 		50298980257C0720002995B7 /* InformationLeftImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029897F257C0720002995B7 /* InformationLeftImage.swift */; };
 		502C18D0257E049C00AC64F5 /* InAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502C18CF257E049C00AC64F5 /* InAppMessaging.swift */; };
@@ -62,6 +69,13 @@
 
 /* Begin PBXFileReference section */
 		16A967BF63CB07E7428C80F9 /* Pods-BasketballAppTwoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasketballAppTwoTests.debug.xcconfig"; path = "Target Support Files/Pods-BasketballAppTwoTests/Pods-BasketballAppTwoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4C20C818259C1D81001F68CC /* ConfirmScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmScore.swift; sourceTree = "<group>"; };
+		4C20C81D259C3C0E001F68CC /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
+		4C20C822259C635E001F68CC /* MapsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsController.swift; sourceTree = "<group>"; };
+		4C643DD225A0260400F7B8BB /* FullPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPlayerView.swift; sourceTree = "<group>"; };
+		4C985BCE259E9574009F29CE /* NavigationSocial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSocial.swift; sourceTree = "<group>"; };
+		4C985BD6259E97BD009F29CE /* FollowersPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersPage.swift; sourceTree = "<group>"; };
+		4C985BDF259EA151009F29CE /* NotificationsSocialPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSocialPage.swift; sourceTree = "<group>"; };
 		5029897A257C06E4002995B7 /* InformationRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationRight.swift; sourceTree = "<group>"; };
 		5029897F257C0720002995B7 /* InformationLeftImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationLeftImage.swift; sourceTree = "<group>"; };
 		502C18CF257E049C00AC64F5 /* InAppMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessaging.swift; sourceTree = "<group>"; };
@@ -147,6 +161,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4C985BCD259E9550009F29CE /* SocialPageViews */ = {
+			isa = PBXGroup;
+			children = (
+				4C985BCE259E9574009F29CE /* NavigationSocial.swift */,
+				4C985BD6259E97BD009F29CE /* FollowersPage.swift */,
+				4C985BDF259EA151009F29CE /* NotificationsSocialPage.swift */,
+			);
+			path = SocialPageViews;
+			sourceTree = "<group>";
+		};
 		50298984257C072C002995B7 /* InformationView */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,12 +190,14 @@
 				502DFEDC2599B0E900BF9102 /* SocialPage.swift */,
 				5038DC77259868810069E415 /* myTabBarController.swift */,
 				5039AD1D255D2736002C6366 /* SignUp.swift */,
+				4C643DD225A0260400F7B8BB /* FullPlayerView.swift */,
 				503BF5F5255E64D9009E42BE /* LoginPage.swift */,
 				50A211B92572141F00E102BA /* homePage.swift */,
 				50760993257B4EDE0019ADAB /* UserInformation.swift */,
+				4C20C822259C635E001F68CC /* MapsController.swift */,
 				50EF5682258DBA0700EEC842 /* Messages.swift */,
-				502C18CF257E049C00AC64F5 /* InAppMessaging.swift */,
 				5038DC722598627B0069E415 /* plusButtonHitViewController.swift */,
+				502C18CF257E049C00AC64F5 /* InAppMessaging.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -192,17 +218,13 @@
 			isa = PBXGroup;
 			children = (
 				50298984257C072C002995B7 /* InformationView */,
-				5039412B2566325F00DD02AA /* CardView.swift */,
+				4C985BCD259E9550009F29CE /* SocialPageViews */,
 				50BD2EBD2584956400899427 /* imageStack.swift */,
+				4C20C81D259C3C0E001F68CC /* Friends.swift */,
+				5039412B2566325F00DD02AA /* CardView.swift */,
+				4C20C818259C1D81001F68CC /* ConfirmScore.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		50394135256632A400DD02AA /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		5039413D256633EF00DD02AA /* Extensions */ = {
@@ -238,7 +260,6 @@
 		50E4BF56255CCB01001CEC48 /* BasketballAppTwo */ = {
 			isa = PBXGroup;
 			children = (
-				50394135256632A400DD02AA /* ViewModels */,
 				5039412A2566325300DD02AA /* Views */,
 				5039412625662FAA00DD02AA /* Model */,
 				5039412225662F5700DD02AA /* ViewControllers */,
@@ -527,24 +548,31 @@
 				50EF5683258DBA0700EEC842 /* Messages.swift in Sources */,
 				5038DC78259868810069E415 /* myTabBarController.swift in Sources */,
 				50E4BF58255CCB01001CEC48 /* AppDelegate.swift in Sources */,
+				4C985BCF259E9574009F29CE /* NavigationSocial.swift in Sources */,
 				502C18D0257E049C00AC64F5 /* InAppMessaging.swift in Sources */,
 				5029897B257C06E4002995B7 /* InformationRight.swift in Sources */,
 				5039413F256633EF00DD02AA /* Extensions+UIView.swift in Sources */,
 				5039AD1E255D2737002C6366 /* SignUp.swift in Sources */,
 				50F83C82258B058F002C35E3 /* shortUsr.swift in Sources */,
+				4C20C823259C635E001F68CC /* MapsController.swift in Sources */,
+				4C643DD325A0260400F7B8BB /* FullPlayerView.swift in Sources */,
 				50BD2EBE2584956400899427 /* imageStack.swift in Sources */,
+				4C20C819259C1D81001F68CC /* ConfirmScore.swift in Sources */,
 				5039AD23255D309E002C6366 /* ImagePicker.swift in Sources */,
 				50C02EDC258F3B4C00DF2FC4 /* FirebaseMessages.swift in Sources */,
 				50298980257C0720002995B7 /* InformationLeftImage.swift in Sources */,
 				50E4BF5A255CCB01001CEC48 /* SceneDelegate.swift in Sources */,
 				50760994257B4EDE0019ADAB /* UserInformation.swift in Sources */,
+				4C985BE0259EA151009F29CE /* NotificationsSocialPage.swift in Sources */,
 				50BD2EAE258492C500899427 /* PlayerShort.swift in Sources */,
 				5038DC732598627B0069E415 /* plusButtonHitViewController.swift in Sources */,
 				50A211BA2572141F00E102BA /* homePage.swift in Sources */,
+				4C985BD7259E97BD009F29CE /* FollowersPage.swift in Sources */,
 				503BF5F6255E64D9009E42BE /* LoginPage.swift in Sources */,
 				503941312566329200DD02AA /* User.swift in Sources */,
 				5039AD12255CDF63002C6366 /* LoginOrSignUp.swift in Sources */,
 				5039412C2566325F00DD02AA /* CardView.swift in Sources */,
+				4C20C81E259C3C0E001F68CC /* Friends.swift in Sources */,
 				502DFEDD2599B0E900BF9102 /* SocialPage.swift in Sources */,
 				502DFED8259994FD00BF9102 /* AddMessageCell.swift in Sources */,
 				5083D82F2595DA7F00EB6B19 /* ContactsCell.swift in Sources */,
@@ -636,6 +664,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development: msfitz@rosemontfarm.net (VL6JGJFY6A)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = YES;
@@ -698,6 +727,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development: msfitz@rosemontfarm.net (VL6JGJFY6A)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = YES;
@@ -730,7 +760,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 5N94526AQY;
+				DEVELOPMENT_TEAM = 38Q3U33NVN;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BasketballAppTwo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

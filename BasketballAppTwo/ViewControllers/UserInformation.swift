@@ -1,10 +1,6 @@
-//
 //  UserInformation.swift
 //  BasketballAppTwo
-//
 //  Created by Michael Fitzgerald on 12/5/20.
-//
-
 import UIKit
 
 class UserInformation: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {

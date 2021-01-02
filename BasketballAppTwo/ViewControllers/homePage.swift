@@ -1,7 +1,5 @@
-//
 //  homePage.swift
 //  BasketballAppTwo
-//
 //  Created by Michael Fitzgerald on 11/13/20.
 //
 
@@ -15,7 +13,6 @@ import JGProgressHUD
 class homePage: UIViewController, CardViewDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
     var data: [String] = []
     var filteredData: [String]!
-    //var searching = false
     let tblview = UITableView()
     let searchBarView = UISearchBar()
     var searchedIsClear = true
@@ -201,25 +198,8 @@ class homePage: UIViewController, CardViewDelegate, UISearchBarDelegate, UITable
     let fillerUIView = UIView()
     let dummycard = CardView()
     var users = [User]()
-//    func calcAge(birthday: String) -> Int {
-//        let dateFormater = DateFormatter()
-//        dateFormater.dateFormat = "MM/dd/yyyy"
-//        let birthdayDate = dateFormater.date(from: birthday)
-//        let calendar: NSCalendar! = NSCalendar(calendarIdentifier: .gregorian)
-//        let now = Date()
-//        let calcAge = calendar.components(.year, from: birthdayDate!, to: now, options: [])
-//        let age = calcAge.year
-//        return age!
-//    }
-//    func stringFromDate(_ date: Date) -> String {
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "dd MMM yyyy HH:mm" //yyyy
-//        return formatter.string(from: date)
-//    }
     fileprivate func CardViewFromUser(user: User) -> CardView{
         let cardDeckView = CardView()
-        //let myString = stringFromDate(user.age! as Date)
-        //let finalAge = calcAge(birthday: myString)
         cardDeckView.uid = user.uid ?? ""
         cardDeckView.UsrName = user.Username ?? ""
         cardDeckView.locationUsername.text = "\(user.Username ?? "")  \(21) \n 22 miles away"

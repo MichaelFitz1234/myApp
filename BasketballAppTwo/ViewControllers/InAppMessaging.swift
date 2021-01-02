@@ -127,6 +127,7 @@ class InAppMessaging: UIViewController, UISearchBarDelegate, UITableViewDataSour
     }
     @objc fileprivate func addHit(){
         let controller = plusButtonHitViewController()
+        controller.messageType = 4
         present(controller, animated: true, completion: nil)
     }
     fileprivate func setupView() {

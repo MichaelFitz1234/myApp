@@ -28,7 +28,6 @@ class imageStack: UIView {
         profileImageView.layer.cornerRadius = 40
         profileImageView.clipsToBounds = true
         profileImageView.image?.withRenderingMode(.alwaysOriginal)
-        //profileImageView.layer.masksToBounds = false
         profileImageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 40, left: 20, bottom: 0, right: 0), size: .init(width: 80, height: 80))
        addSubview(usernameLabel)
        usernameLabel.anchor(top: topAnchor, leading: profileImageView.trailingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 70, left: 10, bottom: 0, right: 0))

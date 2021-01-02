@@ -10,6 +10,42 @@ import FirebaseFirestore
 import FirebaseStorage
 import FirebaseAuth
 class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate  {
+    var messageType = 4{
+        didSet {
+            switch messageType {
+            //this is the case for following usr
+            case 0:
+                view.addSubview(Friends)
+                Friends.text = "Followers/Follow Requests"
+                Friends.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 30, left: ScreenWidth/2.5, bottom: 0, right: 0))
+                setupView()
+            case 1:
+                view.addSubview(Friends)
+                Friends.text = "Friends"
+                Friends.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 30, left: ScreenWidth, bottom: 0, right: 0))
+                setupView()
+            case 2:
+                view.addSubview(Friends)
+                Friends.text = "Following"
+                Friends.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 30, left: ScreenWidth, bottom: 0, right: 0))
+                setupView()
+            case 3:
+                view.addSubview(Friends)
+                Friends.text = "Global Leaderboard"
+                Friends.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 30, left: ScreenWidth/1.7, bottom: 0, right: 0))
+                setupView()
+            case 4:
+                view.addSubview(Friends)
+                Friends.text = "Friends"
+                Friends.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 30, left: ScreenWidth, bottom: 0, right: 0))
+                setupView()
+            default:
+                print("sad")
+            }
+        }
+    }
+    
+    
     var fullMessageData = [PlayerShort]()
     var filteredData = [PlayerShort]()
     fileprivate let searchBar = UISearchBar()
@@ -55,7 +91,6 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
         searchBar.delegate = self
         mytblView.register(AddMessageCell.self, forCellReuseIdentifier: "id")
         mytblView.dataSource = self
@@ -111,14 +146,11 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
+    let Friends = UITextField()
     fileprivate func setupView(){
-        let Friends = UITextField()
-        view.addSubview(Friends)
-        Friends.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 30, left: ScreenWidth, bottom: 0, right: 0))
         Friends.backgroundColor = .systemGray6
         view.backgroundColor = .systemGray6
         searchBar.backgroundColor = .white
-        Friends.text = "Friends"
         Friends.font = .boldSystemFont(ofSize: 25)
         view.addSubview(searchBar)
         searchBar.anchor(top: Friends.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
