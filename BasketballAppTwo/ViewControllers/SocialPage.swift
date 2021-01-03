@@ -3,6 +3,9 @@
 //  Created by Michael Fitzgerald on 12/28/20.
 
 import UIKit
+import FirebaseFirestore
+import FirebaseAuth
+import FirebaseStorage
 class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol{
     var count = 0
     func makeFullScreen(myViewControllers: UIViewController) {
@@ -53,15 +56,153 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol{
             print("sadddd")
         }
     }
-  
-    func makeLargeAgain(myFollowersPage: FollowersPage) -> FollowersPage{
-        myFollowersPage.isLarge = true
-        myFollowersPage.big = false
-        myFollowersPage.MessageType = 0
-        myFollowersPage.makeSmallOrBig = 1
-        return myFollowersPage
+    fileprivate func setupMyUserFromFirebase(){
+        let myUser = Auth.auth().currentUser?.uid ?? ""
+        let docRef = Firestore.firestore().collection("users").document(myUser)
+        docRef.getDocument { (snapshot, error) in
+            let myImage = snapshot?.get("imagePath") as! String
+            let storageRef = Storage.storage().reference(withPath: myImage)
+            storageRef.getData(maxSize: 4*1024*1024) { (data, error) in
+            if let error = error{
+            print("Got an error fetching data: \(error.localizedDescription)")
+                return
+                }else{
+            if let data = data{
+                self.NavigationView.PicImage = UIImage(data: data) ?? UIImage(imageLiteralResourceName: "Image")
+                        }
+                    }
+                }
+        }
     }
-   
+
+
+    fileprivate func getUsersFromFirebase(type: Int){
+        let myUser = Auth.auth().currentUser?.uid ?? ""
+        let docRef = Firestore.firestore().collection("users").document(myUser)
+        switch type {
+        case 0:
+            docRef.collection("Followers").getDocuments { (snapshot, error) in
+                snapshot?.documents.forEach({ (document) in
+                    let myData = document.data()
+                    let User = PlayerShort(dictionary: myData)
+                    let storageRef = Storage.storage().reference(withPath: User.profileImageUrl)
+                    storageRef.getData(maxSize: 4*1024*1024) { (data, error) in
+                    if let error = error{
+                    print("Got an error fetching data: \(error.localizedDescription)")
+                        return
+                        }else{
+                    if let data = data{
+                        let myImage = UIImage(data: data) ?? UIImage(imageLiteralResourceName: "Image")
+                        let myFriend = self.createViews(myFriend: User)
+                        myFriend.myImage = myImage
+                        myFriend.messageType1 = type
+                        myFriend.setupLayout()
+                        self.FollowersLarge.addViewFriend(friend: myFriend)
+                                }
+                            }
+                        }
+                })
+             DispatchQueue.main.async {
+                    self.FollowersLarge.MessageType = type
+                    self.FollowersLarge.big = false
+                    self.FollowersLarge.setupLayout2()
+                    self.FollowersLarge.makeSmallOrBig = 1
+                }
+            }
+        case 1:
+            docRef.collection("Friends").getDocuments { (snapshot, error) in
+                snapshot?.documents.forEach({ (document) in
+                    let myData = document.data()
+                    let User = PlayerShort(dictionary: myData)
+                    let storageRef = Storage.storage().reference(withPath: User.profileImageUrl)
+                    storageRef.getData(maxSize: 4*1024*1024) { (data, error) in
+                    if let error = error{
+                    print("Got an error fetching data: \(error.localizedDescription)")
+                        return
+                        }else{
+                    if let data = data{
+                        let myImage = UIImage(data: data) ?? UIImage(imageLiteralResourceName: "Image")
+                        let myFriend = self.createViews(myFriend: User)
+                        myFriend.myImage = myImage
+                        myFriend.messageType1 = type
+                        myFriend.setupLayout()
+                        self.FriendsViewLarge.addViewFriend(friend: myFriend)
+                                }
+                            }
+                        }
+                })
+             DispatchQueue.main.async {
+                    self.FriendsViewLarge.MessageType = type
+                    self.FriendsViewLarge.big = false
+                    self.FriendsViewLarge.setupLayout2()
+                    self.FriendsViewLarge.makeSmallOrBig = 1
+                }
+            }
+        case 2:
+            docRef.collection("Following").getDocuments { (snapshot, error) in
+                snapshot?.documents.forEach({ (document) in
+                    let myData = document.data()
+                    let User = PlayerShort(dictionary: myData)
+                    let storageRef = Storage.storage().reference(withPath: User.profileImageUrl)
+                    storageRef.getData(maxSize: 4*1024*1024) { (data, error) in
+                    if let error = error{
+                    print("Got an error fetching data: \(error.localizedDescription)")
+                        return
+                        }else{
+                    if let data = data{
+                        let myImage = UIImage(data: data) ?? UIImage(imageLiteralResourceName: "Image")
+                        let myFriend = self.createViews(myFriend: User)
+                        myFriend.myImage = myImage
+                        myFriend.messageType1 = type
+                        myFriend.setupLayout()
+                        self.FollowingLarge.addViewFriend(friend: myFriend)
+                                }
+                            }
+                        }
+                })
+             DispatchQueue.main.async {
+                    self.FollowingLarge.MessageType = type
+                    self.FollowingLarge.big = false
+                    self.FollowingLarge.setupLayout2()
+                    self.FollowingLarge.makeSmallOrBig = 1
+                }
+            }
+        case 3:
+            Firestore.firestore().collection("users").getDocuments { (snapshot, error) in
+                var Ranking = 1
+                snapshot?.documents.forEach({ (document) in
+                    let myData = document.data()
+                    let User = PlayerShort(dictionary: myData)
+                    let storageRef = Storage.storage().reference(withPath: User.profileImageUrl)
+                    storageRef.getData(maxSize: 4*1024*1024) { (data, error) in
+                    if let error = error{
+                    print("Got an error fetching data: \(error.localizedDescription)")
+                        return
+                        }else{
+                    if let data = data{
+                        let myImage = UIImage(data: data) ?? UIImage(imageLiteralResourceName: "Image")
+                        let myFriend = self.createViews(myFriend: User)
+                        myFriend.myImage = myImage
+                        myFriend.RankingValue = Ranking
+                        myFriend.messageType1 = type
+                        myFriend.setupLayout()
+                        self.GlobalLarge.addViewFriend(friend: myFriend)
+                        Ranking = Ranking + 1
+                                }
+                            }
+                        }
+                })
+             DispatchQueue.main.async {
+                    self.GlobalLarge.MessageType = type
+                    self.GlobalLarge.big = false
+                    self.GlobalLarge.setupLayout2()
+                    self.GlobalLarge.makeSmallOrBig = 1
+                }
+            }
+        default:
+            print("sadness")
+        }
+    }
     func searchHit(MessageType: Int) {
         let controller = plusButtonHitViewController()
         controller.messageType = MessageType
@@ -69,8 +210,12 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupMyUserFromFirebase()
+        getUsersFromFirebase(type: 0)
+        getUsersFromFirebase(type: 1)
+        getUsersFromFirebase(type: 2)
+        getUsersFromFirebase(type: 3)
         scrollView.delegate = self
-        setupView()
         FriendsView.delegate = self
         FriendsViewLarge.delegate = self
         Followers.delegate = self
@@ -79,6 +224,7 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol{
         Global.delegate = self
         GlobalLarge.delegate = self
         FollowersLarge.delegate = self
+        setupView()
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         var newFrame = NavigationView.frame
@@ -107,6 +253,14 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol{
         scrollViewContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         initialOffSet = NavigationView.frame.origin.y
     }
+    
+    
+    func createViews(myFriend: PlayerShort) -> Friends{
+        let Friend = Friends()
+        Friend.elo = myFriend.Username
+        Friend.Username = myFriend.Username
+        return Friend
+    }
     var initialOffSet = CGFloat(0)
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -124,59 +278,37 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol{
     //this is used to show the friends
     let Followers: FollowersPage = {
         let myFollowersPage = FollowersPage()
-        myFollowersPage.isLarge = false
         myFollowersPage.MessageType = 0
+        myFollowersPage.makeSmallOrBig = 0
+        myFollowersPage.setupLayout()
         return myFollowersPage
     }()
-    let FollowersLarge: FollowersPage = {
-        let myFollowersPage = FollowersPage()
-        myFollowersPage.isLarge = true
-        myFollowersPage.big = false
-        myFollowersPage.MessageType = 0
-        myFollowersPage.makeSmallOrBig = 1
-        return myFollowersPage
-    }()
+    let FollowersLarge = FollowersPage()
+    
     let FriendsView: FollowersPage = {
         let myFollowersPage = FollowersPage()
-        myFollowersPage.isLarge = false
         myFollowersPage.MessageType = 1
+        myFollowersPage.makeSmallOrBig = 0
+        myFollowersPage.setupLayout()
         return myFollowersPage
     }()
-    let FriendsViewLarge: FollowersPage = {
-        let myFollowersPage = FollowersPage()
-        myFollowersPage.isLarge = true
-        myFollowersPage.big = false
-        myFollowersPage.MessageType = 1
-        myFollowersPage.makeSmallOrBig = 1
-        return myFollowersPage
-    }()
+    let FriendsViewLarge = FollowersPage()
   
     let Following: FollowersPage = {
         let myFollowersPage = FollowersPage()
         myFollowersPage.MessageType = 2
+        myFollowersPage.makeSmallOrBig = 0
+        myFollowersPage.setupLayout()
         return myFollowersPage
     }()
-    let FollowingLarge: FollowersPage = {
-        let myFollowersPage = FollowersPage()
-        myFollowersPage.isLarge = true
-        myFollowersPage.big = false
-        myFollowersPage.MessageType = 2
-        myFollowersPage.makeSmallOrBig = 1
-        return myFollowersPage
-    }()
+    let FollowingLarge = FollowersPage()
     let Global: FollowersPage = {
         let myFollowersPage = FollowersPage()
-        myFollowersPage.isLarge = false
         myFollowersPage.MessageType = 3
+        myFollowersPage.makeSmallOrBig = 0
+        myFollowersPage.setupLayout()
         return myFollowersPage
     }()
-    let GlobalLarge: FollowersPage = {
-        let myFollowersPage = FollowersPage()
-        myFollowersPage.isLarge = true
-        myFollowersPage.big = false
-        myFollowersPage.MessageType = 3
-        myFollowersPage.makeSmallOrBig = 1
-        return myFollowersPage
-    }()
+    let GlobalLarge = FollowersPage()
     let NewRequests: UIView = NotificationsSocialPage()
 }

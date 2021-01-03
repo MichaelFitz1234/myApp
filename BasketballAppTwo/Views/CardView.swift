@@ -69,15 +69,15 @@ class CardView: UIView {
             followButton.setTitle("Follow", for: .normal)
             followButton.backgroundColor = color1
             followButton.setTitleColor(.white, for: .normal)
-            db.document(currentUsr?.uid ?? "").collection("Friends").document(uid).delete()
-            db.document(uid).collection("Friends").document(currentUsr?.uid ?? "").delete()
+            db.document(currentUsr?.uid ?? "").collection("Following").document(uid).delete()
+            db.document(uid).collection("Followers").document(currentUsr?.uid ?? "").delete()
         }else{
             followButton.setTitle("Unfollow", for: .normal)
             followButton.backgroundColor = .white
             followButton.setTitleColor(color1, for: .normal)
             let timestamp = Date()
-            db.document(currentUsr?.uid ?? "").collection("Friends").document(uid).setData(["uid": uid, "imagePath": imageUrl, "Username" : UsrName, "lastMsg" : "", "timestamp": timestamp])
-            db.document(uid).collection("Friends").document(currentUsr?.uid ?? "").setData(["uid" : currentUsr?.uid ?? "", "imagePath": currentUsr?.imageUrl ?? "", "Username" : currentUsr?.Username ?? "", "lastMsg" : "", "timestamp": timestamp] )
+            db.document(currentUsr?.uid ?? "").collection("Following").document(uid).setData(["uid": uid, "imagePath": imageUrl, "Username" : UsrName, "lastMsg" : "", "timestamp": timestamp])
+            db.document(uid).collection("Followers").document(currentUsr?.uid ?? "").setData(["uid" : currentUsr?.uid ?? "", "imagePath": currentUsr?.imageUrl ?? "", "Username" : currentUsr?.Username ?? "", "lastMsg" : "", "timestamp": timestamp])
         }
     }
     

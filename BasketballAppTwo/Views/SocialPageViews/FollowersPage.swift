@@ -18,50 +18,8 @@ class FollowersPage: UIView,FriendsViewDelgate {
         controller.playCard = myView
         self.delegate?.makeFullScreen(myViewControllers: controller)
     }
-    var isLarge = false
+    var MessageType = 0
     let scrollView = UIScrollView()
-    var MessageType = 1{
-        didSet {
-            switch MessageType {
-            //this is the case for following usr
-            case 0:
-                FriendsLabel.setTitle("Followers/Follow Requests", for: .normal)
-                Thewidth = 203
-                if isLarge == true{
-                  setupLayout2()
-                }else {
-                   setupLayout()
-                }
-            //this is a case for friends
-            case 1:
-                FriendsLabel.setTitle("Friends", for: .normal)
-                Thewidth = 58
-                if isLarge == true{
-                  setupLayout2()
-                }else {
-                   setupLayout()
-                }
-            case 2:
-                FriendsLabel.setTitle("Following", for: .normal)
-                Thewidth = 73
-                if isLarge == true{
-                  setupLayout2()
-                }else {
-                   setupLayout()
-                }
-            case 3:
-                FriendsLabel.setTitle("Global Leaderboard", for: .normal)
-                Thewidth = 152
-                if isLarge == true{
-                  setupLayout2()
-                }else {
-                   setupLayout()
-                }
-            default:
-                print("sadness")
-            }
-        }
-    }
     var big = false {
         didSet{
             if big == true {
@@ -76,10 +34,6 @@ class FollowersPage: UIView,FriendsViewDelgate {
     let FriendsLabel = UIButton(type: .system)
     var Thewidth = 58
     let stackView = UIStackView()
-    let view1 = Friends()
-    let view2 = Friends()
-    let view3 = Friends()
-    let view4 = Friends()
     var makeSmaller = UIImage(systemName: "chevron.left")
     var delegate: FollowersPageProtocol?
     let makeSmallerImgView = UIButton(type: .system)
@@ -89,6 +43,24 @@ class FollowersPage: UIView,FriendsViewDelgate {
         
     }
     func setupLayout(){
+        switch MessageType {
+        //this is the case for following usr
+        case 0:
+            FriendsLabel.setTitle("Followers/Follow Requests", for: .normal)
+            Thewidth = 203
+        //this is a case for friends
+        case 1:
+            FriendsLabel.setTitle("Friends", for: .normal)
+            Thewidth = 58
+        case 2:
+            FriendsLabel.setTitle("Following", for: .normal)
+            Thewidth = 73
+        case 3:
+            FriendsLabel.setTitle("Global Leaderboard", for: .normal)
+            Thewidth = 152
+        default:
+            print("sadness")
+        }
         heightAnchor.constraint(equalToConstant: 65).isActive = true
         addSubview(FriendsLabel)
         FriendsLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 15, left: 20, bottom: 0, right: 0),size: .init(width: Thewidth, height: 30))
@@ -117,6 +89,24 @@ class FollowersPage: UIView,FriendsViewDelgate {
         bottomDivider.backgroundColor = .systemGray6
     }
     func setupLayout2(){
+        switch MessageType {
+        //this is the case for following usr
+        case 0:
+            FriendsLabel.setTitle("Followers/Follow Requests", for: .normal)
+            Thewidth = 203
+        //this is a case for friends
+        case 1:
+            FriendsLabel.setTitle("Friends", for: .normal)
+            Thewidth = 58
+        case 2:
+            FriendsLabel.setTitle("Following", for: .normal)
+            Thewidth = 73
+        case 3:
+            FriendsLabel.setTitle("Global Leaderboard", for: .normal)
+            Thewidth = 152
+        default:
+            print("sadness")
+        }
         heightAnchor.constraint(equalToConstant: 420).isActive = true
         addSubview(FriendsLabel)
         FriendsLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 15, left: 20, bottom: 0, right: 0),size: .init(width: Thewidth, height: 30))
@@ -146,29 +136,18 @@ class FollowersPage: UIView,FriendsViewDelgate {
         scrollView.addSubview(stackView)
         stackView.anchor(top: scrollView.topAnchor, leading: scrollView.leadingAnchor, bottom: scrollView.bottomAnchor, trailing: scrollView.trailingAnchor)
         translatesAutoresizingMaskIntoConstraints = false
-        view1.messageType = MessageType
-        view2.messageType = MessageType
-        view3.messageType = MessageType
-        view4.messageType = MessageType
-        view1.delegate = self
-        view2.delegate = self
-        view3.delegate = self
-        view4.delegate = self
-        view1.widthAnchor.constraint(equalToConstant: 220).isActive = true
-        view2.widthAnchor.constraint(equalToConstant: 220).isActive = true
-        view3.widthAnchor.constraint(equalToConstant: 220).isActive = true
-        view4.widthAnchor.constraint(equalToConstant: 220).isActive = true
-        stackView.addArrangedSubview(view1)
-        stackView.addArrangedSubview(view2)
-        stackView.addArrangedSubview(view3)
-        stackView.addArrangedSubview(view4)
+        //creates the cards and number of Cards
         stackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor).isActive = true
         addSubview(bottomDivider)
         bottomDivider.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
         bottomDivider.heightAnchor.constraint(equalToConstant: 3).isActive = true
         bottomDivider.backgroundColor = .systemGray6
         }
-    
+    func addViewFriend(friend: Friends){
+        friend.delegate = self
+        friend.widthAnchor.constraint(equalToConstant: 220).isActive = true
+        stackView.addArrangedSubview(friend)
+    }
     //MARK: action is initiated
     @objc fileprivate func FriendsSearch(){
         delegate?.searchHit(MessageType: MessageType)

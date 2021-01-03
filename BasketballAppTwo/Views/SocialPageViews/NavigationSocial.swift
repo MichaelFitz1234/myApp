@@ -6,9 +6,13 @@
 //
 
 import UIKit
-
 class NavigationSocial: UIView {
-
+    var PicImage = UIImage(imageLiteralResourceName: "Image"){
+        didSet{
+            self.profilePic.image = PicImage
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -17,9 +21,8 @@ class NavigationSocial: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    let profilePic = UIImageView()
     fileprivate func setupLayout(){
-        let profilePic = UIImageView()
-        let PicImage = UIImage(imageLiteralResourceName: "Image")
         let playButtonImage = UIImage(systemName: "gearshape.fill")
         playButtonImage?.withTintColor(.gray)
         let playButtonImageField = UIImageView()
@@ -42,8 +45,8 @@ class NavigationSocial: UIView {
         profilePic.layer.cornerRadius = 25
         profilePic.clipsToBounds = true
         profilePic.image?.withRenderingMode(.alwaysOriginal)
-        profilePic.image = PicImage
         profilePic.contentMode = .scaleAspectFill
+        profilePic.backgroundColor = .gray
         backgroundColor = .white
         addSubview(editProfile)
         editProfile.anchor(top: topAnchor, leading: profilePic.trailingAnchor, bottom: nil, trailing: nil , padding: .init(top: 38, left: 10, bottom: 0, right: 0),size: .init(width: 150, height: 30))
