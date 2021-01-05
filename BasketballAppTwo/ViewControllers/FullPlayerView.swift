@@ -56,9 +56,8 @@ class FullPlayerView: UIViewController {
         super.viewDidLoad()
     }
     @objc fileprivate func tappedOutside(){
-        self.dismiss(animated: true) {
-            
-        }
+        self.dismiss(animated: true)
+        
     }
 
 }

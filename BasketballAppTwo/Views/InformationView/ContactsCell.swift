@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 class ContactsCell: UITableViewCell {
     let myImg = UIImageView()
     let myLabel = UILabel()
@@ -41,7 +40,6 @@ class ContactsCell: UITableViewCell {
         myLabel.textColor = .systemGray2
         myLabel.font = .systemFont(ofSize: 13, weight: UIFont.Weight(rawValue: 10))
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

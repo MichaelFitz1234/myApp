@@ -6,7 +6,6 @@ class InformationRight: UIView {
     let Height = UILabel()
     let Age = UILabel()
     let Description = UILabel()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(Record)
@@ -42,7 +41,6 @@ class InformationRight: UIView {
         Description.numberOfLines = 0
         Description.text = "Playstyle: Agressive baseline player who loves to drive to the basket. Good three point shooter can sometime make if from deep"
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

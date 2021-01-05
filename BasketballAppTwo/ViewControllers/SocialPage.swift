@@ -6,11 +6,49 @@ import UIKit
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
-class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol{
+class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol, NavigationSocialDelegate{
+    func reportScoreH() {
+        let messagesView = ReportAScore()
+        //messagesView.modalPresentationStyle = .fullScreen
+        present(messagesView, animated: false, completion: nil)
+    }
+    
+    func editProfileHit() {
+        let messagesView = EditProfile()
+        //messagesView.modalPresentationStyle = .fullScreen
+        present(messagesView, animated: false, completion: nil)
+
+    }
+    
+    
+    func reportAScore() {
+        let messagesView = ReportAScore()
+        //messagesView.modalPresentationStyle = .fullScreen
+        present(messagesView, animated: false, completion: nil)
+
+    }
+    
+    func messageButtonHit(uid: String) {
+        let messagesView = Messages()
+            messagesView.shouldScroll = false
+        let uidMsg = uid
+        messagesView.uid = uidMsg
+        messagesView.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        present(messagesView, animated: false, completion: nil)
+    }
+    
     var count = 0
+    
     func makeFullScreen(myViewControllers: UIViewController) {
         present(myViewControllers, animated: true, completion: nil)
     }
+    
     func makeBigger(MessageType: Int) {
         switch MessageType {
         case 0:
@@ -61,6 +99,7 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol{
         let docRef = Firestore.firestore().collection("users").document(myUser)
         docRef.getDocument { (snapshot, error) in
             let myImage = snapshot?.get("imagePath") as! String
+            let myData = snapshot?.data()
             let storageRef = Storage.storage().reference(withPath: myImage)
             storageRef.getData(maxSize: 4*1024*1024) { (data, error) in
             if let error = error{
@@ -237,6 +276,7 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol{
         scrollView.addSubview(scrollViewContainer)
         scrollViewContainer.addArrangedSubview(NavigationView)
         NavigationView.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
+        NavigationView.delegate = self
         scrollViewContainer.addArrangedSubview(NewRequests)
         scrollViewContainer.addArrangedSubview(FriendsView)
         scrollViewContainer.addArrangedSubview(Followers)
@@ -257,8 +297,10 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol{
     
     func createViews(myFriend: PlayerShort) -> Friends{
         let Friend = Friends()
+        Friend.imageUrl = myFriend.profileImageUrl
         Friend.elo = myFriend.Username
         Friend.Username = myFriend.Username
+        Friend.uid = myFriend.uid
         return Friend
     }
     var initialOffSet = CGFloat(0)

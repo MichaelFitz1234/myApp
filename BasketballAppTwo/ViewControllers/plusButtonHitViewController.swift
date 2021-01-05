@@ -9,7 +9,27 @@ import UIKit
 import FirebaseFirestore
 import FirebaseStorage
 import FirebaseAuth
-class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate  {
+class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, AddMsgCellProtocl{
+    func reportScoreHit(uid: String) {
+        let messagesView = ReportAScore()
+        messagesView.modalPresentationStyle = .fullScreen
+        present(messagesView, animated: false, completion: nil)
+    }
+    
+    func messageButtonHit(uid: String) {
+        let messagesView = Messages()
+            messagesView.shouldScroll = false
+        let uidMsg = uid
+        messagesView.uid = uidMsg
+        messagesView.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        present(messagesView, animated: false, completion: nil)
+    }
     var messageType = 4{
         didSet {
             switch messageType {
@@ -57,6 +77,7 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
         filteredData.count
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if messageType == 4{
     let messagesView = Messages()
         messagesView.shouldScroll = false
     let uidMsg = filteredData[indexPath.row].uid
@@ -69,12 +90,18 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
     transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
     view.window!.layer.add(transition, forKey: kCATransition)
     present(messagesView, animated: false, completion: nil)
+        }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "id", for: indexPath) as! AddMessageCell
+        cell.RankingLabel.text = "Rank \(indexPath.row)"
+        cell.RankingLabel.textColor = .systemGray2
+        cell.setupLayout(messageType: messageType)
+        cell.delegate = self
         cell.selectionStyle = .none
         cell.myLabel.text = filteredData[indexPath.row].Username
         let imgPath = filteredData[indexPath.row].profileImageUrl
+        cell.uid = filteredData[indexPath.row].uid
         let storageRef = Storage.storage().reference(withPath: imgPath)
         storageRef.getData(maxSize: 4*1024*1024) { (data, error) in
         if let error = error{
@@ -99,8 +126,24 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
         filteredData = fullMessageData
     }
     fileprivate func searchUsersFromFirestore(){
+        var inputFirebase = "Friends"
+        if(messageType == 0){
+            inputFirebase = "Followers"
+        }else if(messageType == 1){
+            inputFirebase = "Friends"
+        }else if(messageType == 2){
+            inputFirebase = "Following"
+        }else if(messageType == 3){
+            inputFirebase = "users"
+        }else if(messageType == 4){
+            inputFirebase = "Friends"
+        }
+        
         let currentUsr = Auth.auth().currentUser?.uid
-        let query = Firestore.firestore().collection("users").document(currentUsr ?? "").collection("Friends").order(by: "timestamp", descending: true)
+        var query = Firestore.firestore().collection("users").document(currentUsr ?? "").collection("\(inputFirebase)").order(by: "timestamp", descending: true)
+        if messageType == 3 {
+            query = Firestore.firestore().collection("users")
+        }
         query.getDocuments { (snapshot, err) in
             if let err = err{
               print("this is the", err)
@@ -109,9 +152,14 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
                 snapshot?.documents.forEach({ (documentSnapshot) in
                     let myUserInfo = documentSnapshot.data()
                     let user = PlayerShort(dictionary: myUserInfo)
+                    if self.messageType == 4{
                     if user.lastMsg == "" || user.lastMsg == nil {
                         self.fullMessageData.append(user)
                     }
+               
+                }else{
+                        self.fullMessageData.append(user)
+                }
                 })
                 self.filteredData = self.fullMessageData
                 self.mytblView.reloadData()
@@ -146,7 +194,7 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
-    let Friends = UITextField()
+    let Friends = UILabel()
     fileprivate func setupView(){
         Friends.backgroundColor = .systemGray6
         view.backgroundColor = .systemGray6

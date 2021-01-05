@@ -12,6 +12,8 @@
 		4C20C81E259C3C0E001F68CC /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20C81D259C3C0E001F68CC /* Friends.swift */; };
 		4C20C823259C635E001F68CC /* MapsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20C822259C635E001F68CC /* MapsController.swift */; };
 		4C643DD325A0260400F7B8BB /* FullPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C643DD225A0260400F7B8BB /* FullPlayerView.swift */; };
+		4C643E0025A3004B00F7B8BB /* ReportAScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C643DFF25A3004B00F7B8BB /* ReportAScore.swift */; };
+		4C643E0D25A30EF200F7B8BB /* EditProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C643E0C25A30EF200F7B8BB /* EditProfile.swift */; };
 		4C985BCF259E9574009F29CE /* NavigationSocial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C985BCE259E9574009F29CE /* NavigationSocial.swift */; };
 		4C985BD7259E97BD009F29CE /* FollowersPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C985BD6259E97BD009F29CE /* FollowersPage.swift */; };
 		4C985BE0259EA151009F29CE /* NotificationsSocialPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C985BDF259EA151009F29CE /* NotificationsSocialPage.swift */; };
@@ -73,6 +75,8 @@
 		4C20C81D259C3C0E001F68CC /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
 		4C20C822259C635E001F68CC /* MapsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsController.swift; sourceTree = "<group>"; };
 		4C643DD225A0260400F7B8BB /* FullPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPlayerView.swift; sourceTree = "<group>"; };
+		4C643DFF25A3004B00F7B8BB /* ReportAScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAScore.swift; sourceTree = "<group>"; };
+		4C643E0C25A30EF200F7B8BB /* EditProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfile.swift; sourceTree = "<group>"; };
 		4C985BCE259E9574009F29CE /* NavigationSocial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSocial.swift; sourceTree = "<group>"; };
 		4C985BD6259E97BD009F29CE /* FollowersPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersPage.swift; sourceTree = "<group>"; };
 		4C985BDF259EA151009F29CE /* NotificationsSocialPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSocialPage.swift; sourceTree = "<group>"; };
@@ -189,6 +193,8 @@
 				5039AD11255CDF63002C6366 /* LoginOrSignUp.swift */,
 				502DFEDC2599B0E900BF9102 /* SocialPage.swift */,
 				5038DC77259868810069E415 /* myTabBarController.swift */,
+				4C643DFF25A3004B00F7B8BB /* ReportAScore.swift */,
+				4C643E0C25A30EF200F7B8BB /* EditProfile.swift */,
 				5039AD1D255D2736002C6366 /* SignUp.swift */,
 				4C643DD225A0260400F7B8BB /* FullPlayerView.swift */,
 				503BF5F5255E64D9009E42BE /* LoginPage.swift */,
@@ -548,11 +554,13 @@
 				50EF5683258DBA0700EEC842 /* Messages.swift in Sources */,
 				5038DC78259868810069E415 /* myTabBarController.swift in Sources */,
 				50E4BF58255CCB01001CEC48 /* AppDelegate.swift in Sources */,
+				4C643E0D25A30EF200F7B8BB /* EditProfile.swift in Sources */,
 				4C985BCF259E9574009F29CE /* NavigationSocial.swift in Sources */,
 				502C18D0257E049C00AC64F5 /* InAppMessaging.swift in Sources */,
 				5029897B257C06E4002995B7 /* InformationRight.swift in Sources */,
 				5039413F256633EF00DD02AA /* Extensions+UIView.swift in Sources */,
 				5039AD1E255D2737002C6366 /* SignUp.swift in Sources */,
+				4C643E0025A3004B00F7B8BB /* ReportAScore.swift in Sources */,
 				50F83C82258B058F002C35E3 /* shortUsr.swift in Sources */,
 				4C20C823259C635E001F68CC /* MapsController.swift in Sources */,
 				4C643DD325A0260400F7B8BB /* FullPlayerView.swift in Sources */,

@@ -11,8 +11,17 @@ protocol FollowersPageProtocol {
     func makeBigger(MessageType: Int)
     func makeSmaller(MessageType: Int)
     func makeFullScreen(myViewControllers: UIViewController)
+    func messageButtonHit(uid: String)
+    func reportScoreH()
 }
 class FollowersPage: UIView,FriendsViewDelgate {
+    func reportScoreHit() {
+        self.delegate?.reportScoreH()
+    }
+    
+    func messageButtonHit(uid: String) {
+        self.delegate?.messageButtonHit(uid: uid)
+    }
     func ImageSelected(myView: UIView) {
         let controller = FullPlayerView()
         controller.playCard = myView
@@ -159,7 +168,6 @@ class FollowersPage: UIView,FriendsViewDelgate {
             self.delegate?.makeBigger(MessageType: MessageType)
         }else{
             self.delegate?.makeSmaller(MessageType: MessageType)
-            //setupLayout()
         }
     }
     required init?(coder: NSCoder) {

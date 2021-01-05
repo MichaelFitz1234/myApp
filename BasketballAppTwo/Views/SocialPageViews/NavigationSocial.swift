@@ -6,13 +6,17 @@
 //
 
 import UIKit
+protocol NavigationSocialDelegate {
+    func editProfileHit()
+    func reportAScore()
+}
 class NavigationSocial: UIView {
     var PicImage = UIImage(imageLiteralResourceName: "Image"){
         didSet{
             self.profilePic.image = PicImage
         }
     }
-    
+    var delegate: NavigationSocialDelegate?
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -59,6 +63,7 @@ class NavigationSocial: UIView {
         addSubview(playButton)
         let aboutAndOne = UIButton(type: .system)
         aboutAndOne.setTitle("About andOne", for: .normal)
+        aboutAndOne.addTarget(self, action: #selector(abAndOne), for: .touchUpInside)
         addSubview(aboutAndOne)
         aboutAndOne.tintColor = .black
         aboutAndOne.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor,padding: .init(top: 24, left: 0, bottom: 0, right: 34))
@@ -87,20 +92,22 @@ class NavigationSocial: UIView {
         
     }
     @objc fileprivate func editProfileHit(){
-        
+        delegate?.editProfileHit()
     }
     @objc fileprivate func infoButtonHit(){
+        if let url = URL(string: "https://www.google.com"),
+                UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:])
+        }
     }
     @objc fileprivate func ReportAScore(){
-        
+        delegate?.reportAScore()
     }
-    
-    //This is for the searchBar Selected
-    @objc fileprivate func FriendsSearch(){
-        
-    }
-    //carrot selected
-    @objc fileprivate  func editViewFriends(){
-        
+     
+    @objc fileprivate func abAndOne(){
+        if let url = URL(string: "https://www.google.com"),
+                UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:])
+        }
     }
 }

@@ -14,7 +14,7 @@ struct shortUsr {
     let Elo: Int?
     init(dictionary: [String: Any]){
         self.uid = dictionary["uid"] as? String
-        self.Username = dictionary["Username"] as? String
+        self.Username = dictionary["username"] as? String
         self.imageUrl = dictionary["imagePath"] as? String
         self.Elo = dictionary["Elo"] as? Int
     }

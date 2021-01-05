@@ -53,7 +53,7 @@ class homePage: UIViewController, CardViewDelegate, UISearchBarDelegate, UITable
         //searchBarView.showsCancelButton = true
     }
     fileprivate func searchUsersFromFirestore(){
-        let query = Firestore.firestore().collection("Usernames")
+        let query = Firestore.firestore().collection("users")
         query.getDocuments { (snapshot, err) in
             if let err = err{
               print("this is the", err)
