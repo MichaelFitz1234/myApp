@@ -42,7 +42,7 @@ class NavigationSocial: UIView {
         editProfile.titleLabel?.tintColor = .white
         editProfile.addTarget(self, action: #selector(editProfileHit), for: .touchUpInside)
         let playButton = UIButton(type: .system)
-        heightAnchor.constraint(equalToConstant: 100).isActive = true
+        //heightAnchor.constraint(equalToConstant: 100).isActive = true
         addSubview(profilePic)
         profilePic.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 30, left: 15, bottom: 0, right: 0),size: .init(width: 50, height: 50))
         profilePic.backgroundColor = .gray

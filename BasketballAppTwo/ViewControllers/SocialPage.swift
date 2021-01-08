@@ -9,21 +9,32 @@ import FirebaseStorage
 class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol, NavigationSocialDelegate{
     func reportScoreH() {
         let messagesView = ReportAScore()
-        //messagesView.modalPresentationStyle = .fullScreen
+        messagesView.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
         present(messagesView, animated: false, completion: nil)
     }
     
     func editProfileHit() {
-        let messagesView = EditProfile()
-        //messagesView.modalPresentationStyle = .fullScreen
-        present(messagesView, animated: false, completion: nil)
+        let messagesView = EditSettings()
+        present(messagesView, animated: true, completion: nil)
 
     }
     
     
     func reportAScore() {
         let messagesView = ReportAScore()
-        //messagesView.modalPresentationStyle = .fullScreen
+        messagesView.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
         present(messagesView, animated: false, completion: nil)
 
     }
@@ -53,18 +64,22 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol,
         switch MessageType {
         case 0:
             FollowersLarge.isHidden = false
+            Followers.isHidden = true
             scrollViewContainer.insertArrangedSubview(FollowersLarge, at: 3)
             scrollViewContainer.removeArrangedSubview(Followers)
         case 1:
             FriendsViewLarge.isHidden = false
+            FriendsView.isHidden = true
             scrollViewContainer.insertArrangedSubview(FriendsViewLarge, at: 2)
             scrollViewContainer.removeArrangedSubview(FriendsView)
         case 2:
             FollowingLarge.isHidden = false
+            Following.isHidden = true
             scrollViewContainer.insertArrangedSubview(FollowingLarge, at: 4)
             scrollViewContainer.removeArrangedSubview(Following)
         case 3:
             GlobalLarge.isHidden = false
+            Global.isHidden = true
             scrollViewContainer.insertArrangedSubview(GlobalLarge, at: 5)
             scrollViewContainer.removeArrangedSubview(Global)
         default:
@@ -78,18 +93,22 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol,
             scrollViewContainer.insertArrangedSubview(Followers, at: 3)
             scrollViewContainer.removeArrangedSubview(FollowersLarge)
             FollowersLarge.isHidden = true
+            Followers.isHidden = false
         case 1:
             scrollViewContainer.insertArrangedSubview(FriendsView, at: 2)
             scrollViewContainer.removeArrangedSubview(FriendsViewLarge)
             FriendsViewLarge.isHidden = true
+            FriendsView.isHidden = false
         case 2:
             scrollViewContainer.insertArrangedSubview(Following, at: 4)
             scrollViewContainer.removeArrangedSubview(FollowingLarge)
             FollowingLarge.isHidden = true
+            Following.isHidden = false
         case 3:
             scrollViewContainer.insertArrangedSubview(Global, at: 5)
             scrollViewContainer.removeArrangedSubview(GlobalLarge)
             GlobalLarge.isHidden = true
+            Global.isHidden = false
         default:
             print("sadddd")
         }
@@ -265,17 +284,19 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol,
         FollowersLarge.delegate = self
         setupView()
     }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        var newFrame = NavigationView.frame
-        newFrame.origin.y = max(self.initialOffSet, scrollView.contentOffset.y)
-        NavigationView.frame = newFrame
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        var newFrame = NavigationView.frame
+//        newFrame.origin.y = max(self.initialOffSet, scrollView.contentOffset.y)
+//        NavigationView.frame = newFrame
+//    }
     fileprivate func setupView() {
         view.backgroundColor = .white
+        view.addSubview(NavigationView)
+        NavigationView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor)
+        NavigationView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         view.addSubview(scrollView)
         scrollView.addSubview(scrollViewContainer)
-        scrollViewContainer.addArrangedSubview(NavigationView)
-        NavigationView.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
+        //NavigationView.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
         NavigationView.delegate = self
         scrollViewContainer.addArrangedSubview(NewRequests)
         scrollViewContainer.addArrangedSubview(FriendsView)
@@ -284,14 +305,14 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol,
         scrollViewContainer.addArrangedSubview(Global)
         scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: NavigationView.bottomAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         scrollViewContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
         scrollViewContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
         scrollViewContainer.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
         scrollViewContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
         scrollViewContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        initialOffSet = NavigationView.frame.origin.y
+//        initialOffSet = NavigationView.frame.origin.y
     }
     
     

@@ -13,6 +13,13 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
     func reportScoreHit(uid: String) {
         let messagesView = ReportAScore()
         messagesView.modalPresentationStyle = .fullScreen
+        messagesView.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
         present(messagesView, animated: false, completion: nil)
     }
     
