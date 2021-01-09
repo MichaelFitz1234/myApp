@@ -5,16 +5,65 @@
 //  Created by Michael  on 1/4/21.
 //
 import UIKit
+import FirebaseFirestore
+import FirebaseAuth
+import FirebaseStorage
 class ReportAScore: UIViewController {
     let numberOfGamesBar = UISlider()
     let numberValue = UILabel()
     let stackView = UIStackView()
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let screenSize: CGRect = UIScreen.main.bounds
-        let screenWidth = screenSize.width
-        view.backgroundColor = .white
+    let screenSize: CGRect = UIScreen.main.bounds
+    let currentUsrImg = UIImageView()
+    let nextUsrImg = UIImageView()
+    var uid = ""
+    var username1 = ""
+    var username2 = ""
+    var currentUsr1 = ""
+    lazy var screenWidth = screenSize.width
+    
+     func setupMyUserFromFirebase(){
+        let myUser = uid
+        let docRef = Firestore.firestore().collection("users").document(myUser)
+        docRef.getDocument { (snapshot, error) in
+            let myImage = snapshot?.get("imagePath") as! String
+            let myData = snapshot?.get("username") as! String
+            self.username2 = myData
+            let storageRef = Storage.storage().reference(withPath: myImage)
+            storageRef.getData(maxSize: 4*1024*1024) { [self] (data, error) in
+            if let error = error{
+            print("Got an error fetching data: \(error.localizedDescription)")
+                return
+                }else{
+            if let data = data{
+                self.nextUsrImg.image = UIImage(data: data) ?? UIImage(imageLiteralResourceName: "Image")
+                        }
+                    }
+                }
+        }
+        let myUser2 = Auth.auth().currentUser?.uid ?? ""
+        self.currentUsr1 = myUser2
+        let docRef2 = Firestore.firestore().collection("users").document(myUser2)
+        docRef2.getDocument { (snapshot, error) in
+            let myImage = snapshot?.get("imagePath") as! String
+            let myData = snapshot?.get("username") as! String
+            self.username1 = myData
+            let storageRef = Storage.storage().reference(withPath: myImage)
+            storageRef.getData(maxSize: 4*1024*1024) { [self] (data, error) in
+            if let error = error{
+            print("Got an error fetching data: \(error.localizedDescription)")
+                return
+                }else{
+            if let data = data{
+                self.currentUsrImg.image = UIImage(data: data) ?? UIImage(imageLiteralResourceName: "Image")
+                self.createInitialValue()
+                        }
+                    }
+                }
+        }
+    }
+    func setupLayout() {
         let navigationView = UIView()
+        view.backgroundColor = .white
         view.addSubview(navigationView)
         navigationView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor)
         navigationView.heightAnchor.constraint(equalToConstant: 125).isActive = true
@@ -29,18 +78,21 @@ class ReportAScore: UIViewController {
         backArrow.addTarget(self, action: #selector(backHit), for: .touchUpInside)
         navigationView.addSubview(backArrow)
         backArrow.anchor(top: nil, leading: view.leadingAnchor, bottom: navigationView.bottomAnchor, trailing: nil,padding: .init(top: 0, left: 15, bottom: 35, right: 0),size: .init(width: 20, height: 20))
-        let currentUsrImg = UIImageView()
         navigationView.addSubview(currentUsrImg)
-        let nextUsrImg = UIImageView()
+        currentUsrImg.image?.withRenderingMode(.alwaysOriginal)
+        currentUsrImg.layer.cornerRadius = 20
         navigationView.addSubview(nextUsrImg)
-        currentUsrImg.backgroundColor = .yellow
-        nextUsrImg.backgroundColor = .orange
         currentUsrImg.anchor(top: nil, leading: view.leadingAnchor, bottom: navigationView.bottomAnchor, trailing: nil, padding: .init(top: 0, left: screenWidth/3, bottom: 30, right: 0), size: .init(width: 40, height: 40))
         let myLabel = UILabel()
         navigationView.addSubview(myLabel)
         myLabel.text = "Vs."
         myLabel.anchor(top: nil, leading: currentUsrImg.trailingAnchor, bottom: navigationView.bottomAnchor, trailing: nil,padding: .init(top: 0, left: 13, bottom: 35, right: 0))
+        nextUsrImg.image?.withRenderingMode(.alwaysOriginal)
+        nextUsrImg.contentMode = .scaleAspectFill
+        nextUsrImg.layer.cornerRadius = 20
         nextUsrImg.anchor(top: nil, leading: myLabel.trailingAnchor, bottom: navigationView.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 10, bottom: 30, right: 0),size: .init(width: 40, height: 40))
+        
+        nextUsrImg.backgroundColor = .gray
         let numberOfGames = UILabel()
         numberOfGames.text = "Number of game played:"
         view.addSubview(numberOfGames)
@@ -66,19 +118,56 @@ class ReportAScore: UIViewController {
         submitButton.setTitle("Submit Score", for: .normal)
         submitButton.backgroundColor = .systemGray
         submitButton.titleLabel?.textColor = .white
+        submitButton.addTarget(self, action: #selector(submitHit), for: .touchUpInside)
         view.addSubview(Scrollview)
         Scrollview.anchor(top: numberOfGamesBar.bottomAnchor, leading: view.leadingAnchor, bottom: submitButton.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
         Scrollview.addSubview(stackView)
         stackView.isUserInteractionEnabled = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.anchor(top: Scrollview.topAnchor, leading: Scrollview.leadingAnchor, bottom: Scrollview.bottomAnchor, trailing: Scrollview.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+
+    }
+    func createInitialValue(){
         let reportCell = ReportScoreStackCell()
+        reportCell.username.text = username1
+        reportCell.username2.text = username2
+        reportCell.setupLayout()
+        reportCell.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
         reportCell.scoreValue = count
         reportCell.isUserInteractionEnabled = true
         stackView.addArrangedSubview(reportCell)
     }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        nextUsrImg.clipsToBounds = true
+        currentUsrImg.clipsToBounds = true
+        setupLayout()
+    }
     var count = 1
     var previousNumberValue = 1
+    @objc fileprivate func submitHit(){
+        var myArrayOfIntsp1 = [String]()
+        var myArrayOfIntsp2 = [String]()
+        stackView.subviews.forEach { (stackView) in
+            let myStack = stackView as! ReportScoreStackCell
+            let s1 = myStack.score1.text
+            let s2 = myStack.score2.text
+            myArrayOfIntsp1.append(s1 ?? "")
+            myArrayOfIntsp2.append(s2 ?? "")
+        }
+        let db = Firestore.firestore().collection("scores").document(self.uid).collection(currentUsr1)
+        let myController = myTabBarController()
+        myController.modalPresentationStyle = .fullScreen
+        myController.selectedIndex = 2
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        present(myController, animated: false) {
+        }
+    }
     @objc fileprivate func backHit(){
         let myController = myTabBarController()
         myController.modalPresentationStyle = .fullScreen
@@ -98,6 +187,10 @@ class ReportAScore: UIViewController {
             let difference = abs(Int(numberOfGamesBar.value) - previousNumberValue)
             for _ in 1...difference {
                 let reportCell = ReportScoreStackCell()
+                reportCell.username.text = username1
+                reportCell.username2.text = username2
+                reportCell.setupLayout()
+                reportCell.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
                 count = count + 1
                 reportCell.scoreValue = count
                 stackView.addArrangedSubview(reportCell)

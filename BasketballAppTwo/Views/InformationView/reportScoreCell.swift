@@ -38,7 +38,7 @@ class reportScoreCell: UITableViewCell {
         myImg2.layer.cornerRadius = 20
         myImg2.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: backgroundView.trailingAnchor,padding: .init(top: 15, left: 0, bottom: 0, right: 18), size: .init(width: 40, height: 40))
         myImg.image = #imageLiteral(resourceName: "BballPlayer")
-        myImg2.image = #imageLiteral(resourceName: "lady4c")
+        myImg2.image = #imageLiteral(resourceName: "shootingImageInitialPage")
         let myLabel = UILabel()
         let myLabel2 = UILabel()
         let myLabel3 = UILabel()

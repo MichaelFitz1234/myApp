@@ -12,11 +12,11 @@ protocol FollowersPageProtocol {
     func makeSmaller(MessageType: Int)
     func makeFullScreen(myViewControllers: UIViewController)
     func messageButtonHit(uid: String)
-    func reportScoreH()
+    func reportScoreH(uid: String)
 }
 class FollowersPage: UIView,FriendsViewDelgate {
-    func reportScoreHit() {
-        self.delegate?.reportScoreH()
+    func reportScoreHit(uid: String) {
+        self.delegate?.reportScoreH(uid: uid)
     }
     
     func messageButtonHit(uid: String) {

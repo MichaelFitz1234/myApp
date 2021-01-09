@@ -10,7 +10,7 @@ import UIKit
 protocol FriendsViewDelgate {
     func ImageSelected(myView: UIView)
     func messageButtonHit(uid: String)
-    func reportScoreHit()
+    func reportScoreHit(uid: String)
 }
 class Friends: UIView {
     let locationUsername = UILabel()
@@ -96,7 +96,7 @@ class Friends: UIView {
         delegate?.messageButtonHit(uid: uid ?? "")
     }
     @objc fileprivate func ReportScoreHit(){
-        delegate?.reportScoreHit()
+        delegate?.reportScoreHit(uid: uid ?? "")
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -7,8 +7,10 @@ import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
 class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol, NavigationSocialDelegate{
-    func reportScoreH() {
+    func reportScoreH(uid: String) {
         let messagesView = ReportAScore()
+        messagesView.uid = uid
+        messagesView.setupMyUserFromFirebase()
         messagesView.modalPresentationStyle = .fullScreen
         let transition = CATransition()
         transition.duration = 0.25
@@ -28,6 +30,8 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol,
     
     func reportAScore() {
         let messagesView = ReportAScore()
+        messagesView.uid = Auth.auth().currentUser?.uid ?? ""
+        messagesView.setupMyUserFromFirebase()
         messagesView.modalPresentationStyle = .fullScreen
         let transition = CATransition()
         transition.duration = 0.25

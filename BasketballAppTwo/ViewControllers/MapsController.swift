@@ -5,45 +5,83 @@
 import UIKit
 import MapKit
 import CoreLocation
-class MapsController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
+class MapsController: UIViewController, CLLocationManagerDelegate,MKMapViewDelegate, UIGestureRecognizerDelegate{
     let ReportScore = UIButton()
     let createChallenge = UIButton()
-    var locationManager: CLLocationManager!
     var mapView = MKMapView()
+    var currentLocationStr = "Current location"
+    let locationManager = CLLocationManager()
+    //MARK:- ViewController LifeCycle Methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
-          locationManager = CLLocationManager()
-          locationManager.delegate = self
-          locationManager.desiredAccuracy = kCLLocationAccuracyBest
-          locationManager.requestAlwaysAuthorization()
-          locationManager.startUpdatingLocation()
-    }
-    override func viewDidAppear(_ animated: Bool) {
+        mapView.register(myAnnotationView.self, forAnnotationViewWithReuseIdentifier: "myMap")
+        self.locationManager.requestAlwaysAuthorization()
+
+            self.locationManager.requestWhenInUseAuthorization()
+
+            if CLLocationManager.locationServicesEnabled() {
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.startUpdatingLocation()
+            }
+
+            mapView.delegate = self
+            mapView.mapType = .standard
+            mapView.isZoomEnabled = true
+            mapView.isScrollEnabled = true
+
+            if let coor = mapView.userLocation.location?.coordinate{
+                mapView.setCenter(coor, animated: true)
+            }
         setupLayout()
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(MapsController.handleLongPress(gestureReconizer:)))
+          lpgr.minimumPressDuration = 0.1
+          lpgr.delaysTouchesBegan = true
+          lpgr.delegate = self
+          self.mapView.addGestureRecognizer(lpgr)
+       
     }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-        {
-            let location = locations.last! as CLLocation
-
-            let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-
-            self.mapView.setRegion(region, animated: true)
-        }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @objc func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+        if gestureReconizer.state != UIGestureRecognizer.State.ended {
+        let touchLocation = gestureReconizer.location(in: mapView)
+        let locationCoordinate = mapView.convert(touchLocation,toCoordinateFrom: mapView)
+        print("Tapped at lat: \(locationCoordinate.latitude) long: \(locationCoordinate.longitude)")
+            let annotation = MKPointAnnotation()
+        annotation.title = "title"
+        annotation.subtitle = "subtitle"
+        annotation.coordinate = CLLocationCoordinate2D(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude)
+        mapView.addAnnotation(annotation)
+        return
+      }
+        if gestureReconizer.state != UIGestureRecognizer.State.began {
+        return
+      }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+
+        mapView.mapType = MKMapType.standard
+
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: locValue, span: span)
+        mapView.setRegion(region, animated: true)
+
+        let annotation = MKPointAnnotation()
+            annotation.coordinate = locValue
+            annotation.title = "title"
+            annotation.subtitle = "subtitle"
+            self.mapView.addAnnotation(annotation)
+
+        //centerMap(locValue)
+    }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let annotatedView1 = mapView.dequeueReusableAnnotationView(withIdentifier: "myMap") as! myAnnotationView
+        annotatedView1.transform = CGAffineTransform(scaleX: 2.5, y: 2.5)
+        return annotatedView1
     }
     fileprivate func setupLayout(){
-        
-        let myNavigation = UIView()
+        let myNavigation = NavigationSocialForMap()
         view.addSubview(myNavigation)
         myNavigation.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor)
         myNavigation.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -56,4 +94,6 @@ class MapsController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         mapView.center = view.center
         view.addSubview(mapView)
     }
+   
 }
+
