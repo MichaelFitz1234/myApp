@@ -26,6 +26,7 @@
 		4C985BE0259EA151009F29CE /* NotificationsSocialPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C985BDF259EA151009F29CE /* NotificationsSocialPage.swift */; };
 		4CC183A125A970340054009C /* myAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC183A025A970340054009C /* myAnnotationView.swift */; };
 		4CC183A625A98E220054009C /* NavigationForMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC183A525A98E220054009C /* NavigationForMap.swift */; };
+		4CC183AB25AADD870054009C /* GameScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC183AA25AADD870054009C /* GameScoreModel.swift */; };
 		5029897B257C06E4002995B7 /* InformationRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029897A257C06E4002995B7 /* InformationRight.swift */; };
 		50298980257C0720002995B7 /* InformationLeftImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029897F257C0720002995B7 /* InformationLeftImage.swift */; };
 		502C18D0257E049C00AC64F5 /* InAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502C18CF257E049C00AC64F5 /* InAppMessaging.swift */; };
@@ -95,6 +96,7 @@
 		4C985BDF259EA151009F29CE /* NotificationsSocialPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSocialPage.swift; sourceTree = "<group>"; };
 		4CC183A025A970340054009C /* myAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myAnnotationView.swift; sourceTree = "<group>"; };
 		4CC183A525A98E220054009C /* NavigationForMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationForMap.swift; sourceTree = "<group>"; };
+		4CC183AA25AADD870054009C /* GameScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScoreModel.swift; sourceTree = "<group>"; };
 		5029897A257C06E4002995B7 /* InformationRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationRight.swift; sourceTree = "<group>"; };
 		5029897F257C0720002995B7 /* InformationLeftImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationLeftImage.swift; sourceTree = "<group>"; };
 		502C18CF257E049C00AC64F5 /* InAppMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessaging.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				503941302566329100DD02AA /* User.swift */,
 				50F83C81258B058F002C35E3 /* shortUsr.swift */,
 				50BD2EAD258492C500899427 /* PlayerShort.swift */,
+				4CC183AA25AADD870054009C /* GameScoreModel.swift */,
 				50C02EDB258F3B4C00DF2FC4 /* FirebaseMessages.swift */,
 			);
 			path = Model;
@@ -577,6 +580,7 @@
 				502C18D0257E049C00AC64F5 /* InAppMessaging.swift in Sources */,
 				5029897B257C06E4002995B7 /* InformationRight.swift in Sources */,
 				5039413F256633EF00DD02AA /* Extensions+UIView.swift in Sources */,
+				4CC183AB25AADD870054009C /* GameScoreModel.swift in Sources */,
 				4C643E0025A3004B00F7B8BB /* ReportAScore.swift in Sources */,
 				4C643E4925A7065200F7B8BB /* EditSettings.swift in Sources */,
 				50F83C82258B058F002C35E3 /* shortUsr.swift in Sources */,

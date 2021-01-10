@@ -21,6 +21,7 @@ class AddMessageCell: UITableViewCell {
     let pointingImage = UIImageView()
     let imageView2 = UIImageView()
     let img = UIImage(systemName: "plus.message")
+    let img2 = UIImage(systemName: "iphone.homebutton.badge.play")
     let AcceptFollow:UIButton = {
         let button = UIButton(type: .system)
         let color1 = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
@@ -138,6 +139,12 @@ class AddMessageCell: UITableViewCell {
         case 4:
             img?.withTintColor(.gray)
             pointingImage.image = img
+            myLabel.backgroundColor = .white
+            addSubview(pointingImage)
+            pointingImage.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 17, left: 10, bottom: 0, right: 8), size: .init(width: 30, height: 30))
+        case 5:
+            img?.withTintColor(.gray)
+            pointingImage.image = img2
             myLabel.backgroundColor = .white
             addSubview(pointingImage)
             pointingImage.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 17, left: 10, bottom: 0, right: 8), size: .init(width: 30, height: 30))

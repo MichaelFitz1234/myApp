@@ -207,8 +207,9 @@ class homePage: UIViewController, CardViewDelegate, UISearchBarDelegate, UITable
         cardDeckView.imageUrl = user.imageUrl ?? ""
         return cardDeckView
     }
-    func didTapMoreInfo(){
+    func didTapMoreInfo(uid: String){
         let myController = UserInformation()
+        myController.myUsr = uid
         present(myController, animated: true)
     }
     

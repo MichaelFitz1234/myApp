@@ -23,48 +23,51 @@ class EditSettings: UIViewController, UIScrollViewDelegate, UITableViewDelegate,
             sv.delegate = self
             return sv
         }()
-        override func viewDidLoad() {
+    fileprivate func setupLayout() {
+        self.myTable.register(reportScoreCell.self, forCellReuseIdentifier: "cell")
+        myTable.delegate = self
+        myTable.dataSource = self
+        view.backgroundColor = .white
+        view.addSubview(navigationBar)
+        navigationBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor)
+        navigationBar.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        navigationBar.backgroundColor = .systemGray6
+        navigationBar.addSubview(navBarText)
+        navBarText.anchor(top: navigationBar.topAnchor, leading: navigationBar.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 30, left: ScreenWidth/2, bottom: 0, right: 0))
+        navBarText.text = "Player Details"
+        navBarText.textColor = .black
+        navBarText.font = .systemFont(ofSize: 15, weight: .bold)
+        let bottomDivider = UIView()
+        view.addSubview(bottomDivider)
+        bottomDivider.anchor(top: nil, leading: view.leadingAnchor, bottom: navigationBar.bottomAnchor, trailing: view.trailingAnchor)
+        bottomDivider.heightAnchor.constraint(equalToConstant: 3).isActive = true
+        bottomDivider.backgroundColor = .systemGray3
+        view.addSubview(leftPicture)
+        leftPicture.anchor(top: navigationBar.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 3, left: 0, bottom: 0, right: 0))
+        leftPicture.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.55).isActive = true
+        leftPicture.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4).isActive = true
+        view.addSubview(rightText)
+        rightText.anchor(top: navigationBar.bottomAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor)
+        rightText.backgroundColor = .white
+        rightText.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
+        rightText.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.45).isActive = true
+        let myLabel = UITextField()
+        view.addSubview(myLabel)
+        myLabel.anchor(top: leftPicture.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,padding: .init(top: 10, left: 10, bottom: 16, right: 10))
+        myLabel.text = "Games:"
+        view.addSubview(myTable)
+        myTable.anchor(top: myLabel.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
+        myTable.backgroundColor = .white
+        let bottomDivider1 = UIView()
+        view.addSubview(bottomDivider1)
+        bottomDivider1.anchor(top: nil, leading: view.leadingAnchor, bottom: myLabel.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 4, left: 10, bottom: 0, right: 10))
+        bottomDivider1.heightAnchor.constraint(equalToConstant: 3).isActive = true
+        bottomDivider1.backgroundColor = .systemGray6
+    }
+    
+    override func viewDidLoad() {
             super.viewDidLoad()
-            self.myTable.register(reportScoreCell.self, forCellReuseIdentifier: "cell")
-            myTable.delegate = self
-            myTable.dataSource = self
-            view.backgroundColor = .white
-            view.addSubview(navigationBar)
-            navigationBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor)
-            navigationBar.heightAnchor.constraint(equalToConstant: 60).isActive = true
-            navigationBar.backgroundColor = .systemGray6
-            navigationBar.addSubview(navBarText)
-            navBarText.anchor(top: navigationBar.topAnchor, leading: navigationBar.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 30, left: ScreenWidth/2, bottom: 0, right: 0))
-            navBarText.text = "Player Details"
-            navBarText.textColor = .black
-            navBarText.font = .systemFont(ofSize: 15, weight: .bold)
-            let bottomDivider = UIView()
-            view.addSubview(bottomDivider)
-            bottomDivider.anchor(top: nil, leading: view.leadingAnchor, bottom: navigationBar.bottomAnchor, trailing: view.trailingAnchor)
-            bottomDivider.heightAnchor.constraint(equalToConstant: 3).isActive = true
-            bottomDivider.backgroundColor = .systemGray3
-            view.addSubview(leftPicture)
-            leftPicture.anchor(top: navigationBar.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 3, left: 0, bottom: 0, right: 0))
-            leftPicture.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.55).isActive = true
-            leftPicture.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4).isActive = true
-            view.addSubview(rightText)
-            rightText.anchor(top: navigationBar.bottomAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor)
-            rightText.backgroundColor = .white
-            rightText.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
-            rightText.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.45).isActive = true
-            let myLabel = UITextField()
-            view.addSubview(myLabel)
-            myLabel.anchor(top: leftPicture.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,padding: .init(top: 10, left: 10, bottom: 16, right: 10))
-            myLabel.text = "Games:"
-            view.addSubview(myTable)
-            myTable.anchor(top: myLabel.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
-            myTable.backgroundColor = .white
-            let bottomDivider1 = UIView()
-            view.addSubview(bottomDivider1)
-            bottomDivider1.anchor(top: nil, leading: view.leadingAnchor, bottom: myLabel.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 4, left: 10, bottom: 0, right: 10))
-            bottomDivider1.heightAnchor.constraint(equalToConstant: 3).isActive = true
-            bottomDivider1.backgroundColor = .systemGray6
-            
+        setupLayout()
         }
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return 1
@@ -90,7 +93,6 @@ class EditSettings: UIViewController, UIScrollViewDelegate, UITableViewDelegate,
         }
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell:UITableViewCell = (self.myTable.dequeueReusableCell(withIdentifier: "cell") as! reportScoreCell?)!
-
             return cell
         }
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

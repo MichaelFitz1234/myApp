@@ -2,15 +2,58 @@
 //  BasketballAppTwo
 //  Created by Michael Fitzgerald on 12/5/20.
 import UIKit
-
+import FirebaseFirestore
+import FirebaseAuth
+import FirebaseStorage
 class UserInformation: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
     let navigationBar = UIView()
     let navBarText = UILabel()
     let leftPicture = InformationLeftImage(image: nil)
     let rightText = InformationRight()
     let myTable = UITableView()
+    var homeUsrImage = UIImage()
+    var CurrentUsr:User?
+    var currentImg = UIImage()
+    var myArrayOfElements = [GameScore]()
+    var Array3 = [PlayerShort]()
     fileprivate lazy var screenSize = UIScreen.main.bounds
     fileprivate lazy var ScreenWidth = screenSize.width-80
+    var myUsr:String = "" {
+        didSet{
+            getGamesFB()
+            Firestore.firestore().collection("users").document(myUsr).getDocument{ (snapshot, error) in
+                let data = snapshot?.data()
+                let myUsr = User(dictionary: data ?? ["":""])
+                self.CurrentUsr = myUsr
+                self.leftPicture.ELo.text = String(myUsr.Elo ?? 0)
+                self.leftPicture.Username.text = myUsr.Username
+                let storageRef = Storage.storage().reference(withPath: myUsr.imageUrl ?? "")
+                storageRef.getData(maxSize: 4*1024*1024) { [self] (data, error) in
+                if let error = error{
+                print("Got an error fetching data: \(error.localizedDescription)")
+                    return
+                    }else{
+                if let data = data{
+                    currentImg = UIImage(data: data) ?? UIImage(imageLiteralResourceName: "Image")
+                    self.leftPicture.image = currentImg
+                    self.myTable.reloadData()
+                            }
+                        }
+                    }
+            }
+        }
+       
+    }
+    func getGamesFB(){
+        Firestore.firestore().collection("scores").document(myUsr).collection("gameScores").getDocuments{ (snapshot, error) in
+            snapshot?.documents.forEach({ (snapshot) in
+                let myData = snapshot.data()
+                let myScoreDoc = GameScore(dictionary: myData)
+                self.myArrayOfElements.append(myScoreDoc)
+            })
+
+        }
+    }
     //let myCell = ScoreCell(style: .default, reuseIdentifier: "Ugly")
     lazy var myScrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -19,11 +62,15 @@ class UserInformation: UIViewController, UIScrollViewDelegate, UITableViewDelega
         sv.delegate = self
         return sv
     }()
+    func getFirebaseUsr(){
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.myTable.register(reportScoreCell.self, forCellReuseIdentifier: "cell")
         myTable.delegate = self
         myTable.dataSource = self
+        myTable.separatorStyle = .none
         view.backgroundColor = .white
         view.addSubview(navigationBar)
         navigationBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor)
@@ -67,7 +114,7 @@ class UserInformation: UIViewController, UIScrollViewDelegate, UITableViewDelega
         }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 12
+        return myArrayOfElements.count
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 5
@@ -78,15 +125,42 @@ class UserInformation: UIViewController, UIScrollViewDelegate, UITableViewDelega
         return headerView
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-        return 70
-        }else {
         return 70
         }
-    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = (self.myTable.dequeueReusableCell(withIdentifier: "cell") as! reportScoreCell?)!
-
+        let cell = (self.myTable.dequeueReusableCell(withIdentifier: "cell") as! reportScoreCell?)!
+        cell.myImg.image = self.currentImg
+        cell.myLabel.text = self.CurrentUsr?.Username
+        let a1 = String(myArrayOfElements[indexPath.row].gamesP1 ?? 0)
+        let a2 = String(myArrayOfElements[indexPath.row].gamesP2 ?? 0)
+        let myString:NSString = "Games: \(a1)-\(a2) L" as NSString
+        var myMutableString = NSMutableAttributedString()
+        myMutableString = NSMutableAttributedString(string: myString as String, attributes: [NSAttributedString.Key.font:UIFont(name: "Georgia", size: 18.0)!])
+        if (myArrayOfElements[indexPath.row].gamesP1 ?? 0 > myArrayOfElements[indexPath.row].gamesP2 ?? 0){
+            myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.green, range: NSRange(location:11,length:1))
+        }else {
+            myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.red, range: NSRange(location:11,length:1))
+        }
+        myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: NSRange(location:0,length:10))
+        cell.gameScore.attributedText = myMutableString
+        Firestore.firestore().collection("users").document(myArrayOfElements[indexPath.row].player2 ?? "").getDocument{ (snapshot, error) in
+        let data = snapshot?.data()
+        let myUsr = User(dictionary: data ?? ["":""])
+        //Create Cell Username Elo
+            cell.myLabel2.text = "\(myUsr.Username ?? "") (\(Int(myUsr.Elo ?? 0)))"
+        let storageRef = Storage.storage().reference(withPath: myUsr.imageUrl ?? "")
+        storageRef.getData(maxSize: 4*1024*1024) { [self] (data, error) in
+        if let error = error{
+        print("Got an error fetching data: \(error.localizedDescription)")
+                return
+            }else{
+        if let data = data{
+            let img = UIImage(data: data) ?? UIImage(imageLiteralResourceName: "Image")
+            cell.myImg2.image = img
+                        }
+                    }
+                }
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {  

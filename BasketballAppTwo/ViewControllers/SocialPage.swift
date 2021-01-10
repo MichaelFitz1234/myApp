@@ -29,17 +29,9 @@ class SocialPage: UIViewController, UIScrollViewDelegate, FollowersPageProtocol,
     
     
     func reportAScore() {
-        let messagesView = ReportAScore()
-        messagesView.uid = Auth.auth().currentUser?.uid ?? ""
-        messagesView.setupMyUserFromFirebase()
-        messagesView.modalPresentationStyle = .fullScreen
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        present(messagesView, animated: false, completion: nil)
+        let messagesView = plusButtonHitViewController()
+        messagesView.messageType = 5
+        present(messagesView, animated: true, completion: nil)
 
     }
     

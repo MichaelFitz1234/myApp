@@ -13,7 +13,7 @@ import FirebaseFirestore
 protocol CardViewDelegate {
     func nextCardRight(translation: CGFloat)
     func nextCardLeft(translation: CGFloat)
-    func didTapMoreInfo()
+    func didTapMoreInfo(uid: String)
     func getMyUser() -> User
 }
 
@@ -83,7 +83,7 @@ class CardView: UIView {
     
     
     @objc fileprivate func moreInfoHit(){
-        delegate?.didTapMoreInfo()
+        delegate?.didTapMoreInfo(uid: uid)
     }
     fileprivate let moreInfoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -155,7 +155,8 @@ class CardView: UIView {
     }
     //this sets up the layout kinda messy could be done in fewer lines but going to go with ith for now
      func setupLayout(){
-        layer.borderColor = .init(red: 0, green: 0, blue: 140, alpha: 0.75)
+        //layer.borderColor = .init(red: 0, green: 0, blue: 140, alpha: 0.75)
+        layer.borderWidth = 8
         layer.cornerRadius = 10
         clipsToBounds = true
         addSubview(Userimage)
@@ -170,6 +171,7 @@ class CardView: UIView {
         Elo.numberOfLines = 0
         Elo.textColor = .white
         Elo.numberOfLines = 0
+        
         Elo.font = .boldSystemFont(ofSize: 20)
         addSubview(followButton)
         followButton.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 8, bottom: 0, right: 16), size: .init(width: 80, height: 30))

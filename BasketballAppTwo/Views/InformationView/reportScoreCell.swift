@@ -11,6 +11,10 @@ class reportScoreCell: UITableViewCell {
     let myImg = UIImageView()
     let myImg2 = UIImageView()
     let pointingImage = UIImageView()
+    let myLabel = UILabel()
+    let myLabel2 = UILabel()
+    let myLabel3 = UILabel()
+    let gameScore = UILabel()
     let img = UIImage(systemName: "arrow.right")
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -37,34 +41,23 @@ class reportScoreCell: UITableViewCell {
         myImg2.layer.masksToBounds = true
         myImg2.layer.cornerRadius = 20
         myImg2.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: backgroundView.trailingAnchor,padding: .init(top: 15, left: 0, bottom: 0, right: 18), size: .init(width: 40, height: 40))
-        myImg.image = #imageLiteral(resourceName: "BballPlayer")
-        myImg2.image = #imageLiteral(resourceName: "shootingImageInitialPage")
-        let myLabel = UILabel()
-        let myLabel2 = UILabel()
-        let myLabel3 = UILabel()
+        myImg.backgroundColor = .gray
+        myImg2.backgroundColor = .gray
+    
         addSubview(myLabel)
         addSubview(myLabel2)
         addSubview(myLabel3)
         myLabel.anchor(top: backgroundView.topAnchor, leading: myImg.trailingAnchor, bottom: nil, trailing: nil,padding: .init(top: 12, left: 2, bottom: 0, right: 0))
-        myLabel.text = "Michael"
         myLabel.textColor = .white
         myLabel2.anchor(top: backgroundView.topAnchor, leading: nil, bottom: nil, trailing: myImg2.leadingAnchor,padding: .init(top: 12, left: 0, bottom: 0, right: 2))
-        myLabel2.text = "Jason(1300)"
         myLabel2.textColor = .white
-        myLabel3.anchor(top: backgroundView.topAnchor, leading: myLabel.trailingAnchor, bottom: nil, trailing: nil,padding: .init(top: 15, left: 30, bottom: 0, right: 0))
+        myLabel3.anchor(top: backgroundView.topAnchor, leading: myLabel.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 14, left: 10, bottom: 0, right: 0))
         myLabel3.text = "Vs."
         myLabel3.textColor = .white
-        let gameScore = UILabel()
         addSubview(gameScore)
         gameScore.anchor(top: myLabel.bottomAnchor, leading: myLabel.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 5, left: 55, bottom: 0, right: 0))
         // set the text from the data model
-        var myString:NSString = "Games: 0-1 L"
-        var myMutableString = NSMutableAttributedString()
-        myMutableString = NSMutableAttributedString(string: myString as String, attributes: [NSAttributedString.Key.font:UIFont(name: "Georgia", size: 18.0)!])
-        myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.red, range: NSRange(location:11,length:1))
-        myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: NSRange(location:0,length:10))
         // set label Attribute
-        gameScore.attributedText = myMutableString
         sendSubviewToBack(backgroundView)
 
     }

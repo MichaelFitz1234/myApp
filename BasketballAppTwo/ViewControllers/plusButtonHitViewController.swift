@@ -66,6 +66,11 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
                 Friends.text = "Friends"
                 Friends.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 30, left: ScreenWidth, bottom: 0, right: 0))
                 setupView()
+            case 5:
+                view.addSubview(Friends)
+                Friends.text = "Friends"
+                Friends.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 30, left: ScreenWidth, bottom: 0, right: 0))
+                setupView()
             default:
                 print("sad")
             }
@@ -97,6 +102,18 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
     transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
     view.window!.layer.add(transition, forKey: kCATransition)
     present(messagesView, animated: false, completion: nil)
+        }else if(messageType == 5){
+            let messagesView = ReportAScore()
+            messagesView.uid = filteredData[indexPath.row].uid
+            messagesView.setupMyUserFromFirebase()
+            messagesView.modalPresentationStyle = .fullScreen
+            let transition = CATransition()
+            transition.duration = 0.25
+            transition.type = CATransitionType.push
+            transition.subtype = CATransitionSubtype.fromRight
+            transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+            view.window!.layer.add(transition, forKey: kCATransition)
+            present(messagesView, animated: false, completion: nil)
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -143,6 +160,8 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
         }else if(messageType == 3){
             inputFirebase = "users"
         }else if(messageType == 4){
+            inputFirebase = "Friends"
+        }else if(messageType == 5){
             inputFirebase = "Friends"
         }
         

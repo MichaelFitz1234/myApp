@@ -19,6 +19,8 @@ class ReportAScore: UIViewController {
     var username1 = ""
     var username2 = ""
     var currentUsr1 = ""
+    var p1Elo = 1200
+    var p2Elo = 1200
     lazy var screenWidth = screenSize.width
     
      func setupMyUserFromFirebase(){
@@ -27,6 +29,7 @@ class ReportAScore: UIViewController {
         docRef.getDocument { (snapshot, error) in
             let myImage = snapshot?.get("imagePath") as! String
             let myData = snapshot?.get("username") as! String
+            self.p2Elo = snapshot?.get("currElo") as! Int
             self.username2 = myData
             let storageRef = Storage.storage().reference(withPath: myImage)
             storageRef.getData(maxSize: 4*1024*1024) { [self] (data, error) in
@@ -46,6 +49,7 @@ class ReportAScore: UIViewController {
         docRef2.getDocument { (snapshot, error) in
             let myImage = snapshot?.get("imagePath") as! String
             let myData = snapshot?.get("username") as! String
+            self.p1Elo = snapshot?.get("currElo") as! Int
             self.username1 = myData
             let storageRef = Storage.storage().reference(withPath: myImage)
             storageRef.getData(maxSize: 4*1024*1024) { [self] (data, error) in
@@ -146,16 +150,35 @@ class ReportAScore: UIViewController {
     var count = 1
     var previousNumberValue = 1
     @objc fileprivate func submitHit(){
-        var myArrayOfIntsp1 = [String]()
-        var myArrayOfIntsp2 = [String]()
+        let date = Date()
+        var myArrayOfIntsp1 = [Int]()
+        var myArrayOfIntsp2 = [Int]()
+        var gamesForP1 = 0
+        var gamesForP2 = 0
         stackView.subviews.forEach { (stackView) in
             let myStack = stackView as! ReportScoreStackCell
-            let s1 = myStack.score1.text
-            let s2 = myStack.score2.text
-            myArrayOfIntsp1.append(s1 ?? "")
-            myArrayOfIntsp2.append(s2 ?? "")
+            let s1 = Int(myStack.score1.text ?? "0")
+            let s2 = Int(myStack.score2.text ?? "0")
+            if s1 ?? 0>s2 ?? 0 {
+                gamesForP1 = gamesForP1 + 1
+            }else if s2 ?? 0 > s1 ?? 0 {
+                gamesForP2 = gamesForP2 + 1
+            }else{
+                
+            }
+            myArrayOfIntsp1.append(s1 ?? 0)
+            myArrayOfIntsp2.append(s2 ?? 0)
         }
-        let db = Firestore.firestore().collection("scores").document(self.uid).collection(currentUsr1)
+        //this section is where the elo calcuation will happen
+        p1Elo = p1Elo-100
+        p2Elo = p2Elo+100
+        Firestore.firestore().collection("scores").document(self.uid).collection("gameScores").document().setData(["player1" : uid, "player2": currentUsr1, "Player1Score": myArrayOfIntsp1, "player2Score": myArrayOfIntsp2, "timestamp" : date, "gamesP1": gamesForP1, "gamesP2": gamesForP2])
+        Firestore.firestore().collection("scores").document(self.currentUsr1).collection("gameScores").document().setData(["player1" : currentUsr1, "player2": uid, "player1Score": myArrayOfIntsp2, "player2Score": myArrayOfIntsp1, "timestamp" : date, "gamesP1": gamesForP2, "gamesP2": gamesForP1])
+        Firestore.firestore().collection("elo").document(self.currentUsr1).collection("gameScores").document().setData(["Elo" : self.p1Elo, "timestamp": date])
+        Firestore.firestore().collection("elo").document(uid).collection("gameScores").document().setData(["Elo" : self.p2Elo, "timestamp": date])
+        Firestore.firestore().collection("users").document(currentUsr1).updateData(["currElo" : p1Elo])
+        Firestore.firestore().collection("users").document(uid).updateData(["currElo" : p2Elo])
+
         let myController = myTabBarController()
         myController.modalPresentationStyle = .fullScreen
         myController.selectedIndex = 2
