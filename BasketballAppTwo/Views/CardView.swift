@@ -130,10 +130,28 @@ class CardView: UIView {
         let shouldDismissCard = abs(gesture.translation(in: nil).x) > threshold
         if shouldDismissCard {
             // hack solution
-            if translationDirection == 1 {
+            if translationDirection == 1{
+                if previousCard == nil{
+                UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+                    self.transform = .identity
+                    let rotationalTransformation = CGAffineTransform(rotationAngle: 0)
+                    self.nextCard?.transform = rotationalTransformation.translatedBy(x: self.ScreenWidth, y: 0)
+                    self.previousCard?.transform = rotationalTransformation.translatedBy(x: -self.ScreenWidth, y: 0)
+                    })
+                }else{
                 self.delegate?.nextCardLeft(translation: -700)
-            } else {
+                }
+            } else if translationDirection == -1{
+                if nextCard == nil{
+                    UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+                        self.transform = .identity
+                        let rotationalTransformation = CGAffineTransform(rotationAngle: 0)
+                        self.nextCard?.transform = rotationalTransformation.translatedBy(x: self.ScreenWidth, y: 0)
+                        self.previousCard?.transform = rotationalTransformation.translatedBy(x: -self.ScreenWidth, y: 0)
+                        })
+                    } else {
                 self.delegate?.nextCardRight(translation: 700)
+                }
             }
         } else {
             UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
@@ -156,7 +174,7 @@ class CardView: UIView {
     //this sets up the layout kinda messy could be done in fewer lines but going to go with ith for now
      func setupLayout(){
         //layer.borderColor = .init(red: 0, green: 0, blue: 140, alpha: 0.75)
-        layer.borderWidth = 8
+        //layer.borderWidth = 8
         layer.cornerRadius = 10
         clipsToBounds = true
         addSubview(Userimage)
