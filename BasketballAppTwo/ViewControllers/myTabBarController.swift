@@ -6,9 +6,7 @@
 //
 
 import UIKit
-
-class myTabBarController: UITabBarController {
-    
+class myTabBarController: UITabBarController{  
     override func viewDidLoad() {
         super.viewDidLoad()
         let myImage = UIImage(systemName: "message")
@@ -25,5 +23,5 @@ class myTabBarController: UITabBarController {
         FourthViewController.tabBarItem =  UITabBarItem(title: "Challenges", image: myImage2, tag: 3)
         let tabBarList = [firstViewController, secondViewController,thirdViewController,FourthViewController]
         viewControllers = tabBarList
-    }
+        }
 }

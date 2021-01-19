@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -15,8 +15,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
-        let newViewController =  myTabBarController()
-        self.window?.rootViewController = newViewController
+         //Create a MainViewController
+//        let firebaseAuth = Auth.auth()
+//    do {
+//      try firebaseAuth.signOut()
+//    } catch let signOutError as NSError {
+//      print ("Error signing out: %@", signOutError)
+//    }
+        let myRoot = LoginOrSignUpViewController()
+        let mainView = manageScreens(rootViewController: myRoot)
+        myRoot.delegate = mainView
+        //let mainView = passwordReset()
+        self.window?.rootViewController = mainView
         self.window?.makeKeyAndVisible()
      }
 

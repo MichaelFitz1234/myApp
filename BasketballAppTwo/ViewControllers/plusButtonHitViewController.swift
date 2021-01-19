@@ -9,7 +9,13 @@ import UIKit
 import FirebaseFirestore
 import FirebaseStorage
 import FirebaseAuth
+protocol createAMapChallenge {
+    func addToMap()
+}
 class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, AddMsgCellProtocl{
+    var delegate: createAMapChallenge?
+    let myButton = UIButton()
+    let myDatePicker = UIDatePicker()
     func reportScoreHit(uid: String) {
         let messagesView = ReportAScore()
         messagesView.modalPresentationStyle = .fullScreen
@@ -25,7 +31,7 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
     
     func messageButtonHit(uid: String) {
         let messagesView = Messages()
-            messagesView.shouldScroll = false
+        messagesView.shouldScroll = false
         let uidMsg = uid
         messagesView.uid = uidMsg
         messagesView.modalPresentationStyle = .fullScreen
@@ -71,6 +77,25 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
                 Friends.text = "Friends"
                 Friends.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 30, left: ScreenWidth, bottom: 0, right: 0))
                 setupView()
+            case 6:
+                view.addSubview(Friends)
+                Friends.text = "Create Challenge"
+                myButton.setTitle("Next", for: .normal)
+                myButton.setTitleColor(.systemBlue, for: .normal)
+                myButton.addTarget(self, action: #selector(NextHit), for: .touchUpInside)
+                view.addSubview(myButton)
+                myButton.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 30, left: 5, bottom: 0, right: 0),size: .init(width: 70, height: 30))
+                myButton.titleLabel?.adjustsFontSizeToFitWidth = true
+                Friends.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 30, left: ScreenWidth/1.5, bottom: 0, right: 0))
+                view.addSubview(myDatePicker)
+                myDatePicker.anchor(top: Friends.bottomAnchor, leading: nil, bottom: nil, trailing: myButton.trailingAnchor, padding: .init(top: 10, left: -10, bottom: 0, right: 0),size: .init(width: 200, height: 40))
+                let SelectATime = UILabel()
+                view.addSubview(SelectATime)
+                SelectATime.anchor(top: myDatePicker.topAnchor, leading: nil, bottom: nil, trailing: myDatePicker.leadingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 4))
+                SelectATime.text = "Time For Challenge:"
+                SelectATime.numberOfLines = 0
+                
+                setupView()
             default:
                 print("sad")
             }
@@ -86,22 +111,26 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
     fileprivate lazy var ScreenHeight = screenSize.height
     fileprivate let mytblView = UITableView()
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        filteredData.count
+        if messageType == 6{
+            return filteredData.count+1
+        }else{
+            return filteredData.count
+        }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if messageType == 4{
-    let messagesView = Messages()
-        messagesView.shouldScroll = false
-    let uidMsg = filteredData[indexPath.row].uid
-    messagesView.uid = uidMsg
-    messagesView.modalPresentationStyle = .fullScreen
-    let transition = CATransition()
-    transition.duration = 0.25
-    transition.type = CATransitionType.push
-    transition.subtype = CATransitionSubtype.fromRight
-    transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-    view.window!.layer.add(transition, forKey: kCATransition)
-    present(messagesView, animated: false, completion: nil)
+            let messagesView = Messages()
+            messagesView.shouldScroll = false
+            let uidMsg = filteredData[indexPath.row].uid
+            messagesView.uid = uidMsg
+            messagesView.modalPresentationStyle = .fullScreen
+            let transition = CATransition()
+            transition.duration = 0.25
+            transition.type = CATransitionType.push
+            transition.subtype = CATransitionSubtype.fromRight
+            transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+            view.window!.layer.add(transition, forKey: kCATransition)
+            present(messagesView, animated: false, completion: nil)
         }else if(messageType == 5){
             let messagesView = ReportAScore()
             messagesView.uid = filteredData[indexPath.row].uid
@@ -114,32 +143,78 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
             transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
             view.window!.layer.add(transition, forKey: kCATransition)
             present(messagesView, animated: false, completion: nil)
+        }else if(messageType == 6){
+            if indexPath.row == 0{
+                var myindex = indexPath
+                for _ in 0...filteredData.count{
+                    let currentCell = mytblView.cellForRow(at: myindex) as! AddMessageCell
+                    if(currentCell.count % 2 == 0){
+                        currentCell.count = currentCell.count + 1
+                    }else{
+                        currentCell.count = currentCell.count + 1
+                    }
+                    myindex.row = myindex.row + 1
+                }
+            }else{
+                let currentCell = mytblView.cellForRow(at: indexPath) as! AddMessageCell
+                if(currentCell.count % 2 == 0){
+                    currentCell.count = currentCell.count + 1
+                }else{
+                    currentCell.count = currentCell.count + 1
+                }
+            }
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "id", for: indexPath) as! AddMessageCell
-        cell.RankingLabel.text = "Rank \(indexPath.row)"
-        cell.RankingLabel.textColor = .systemGray2
-        cell.setupLayout(messageType: messageType)
-        cell.delegate = self
         cell.selectionStyle = .none
-        cell.myLabel.text = filteredData[indexPath.row].Username
-        let imgPath = filteredData[indexPath.row].profileImageUrl
-        cell.uid = filteredData[indexPath.row].uid
-        let storageRef = Storage.storage().reference(withPath: imgPath)
-        storageRef.getData(maxSize: 4*1024*1024) { (data, error) in
-        if let error = error{
-        print("Got an error fetching data: \(error.localizedDescription)")
-            return
+        if messageType == 6{
+            if indexPath.row == 0{
+                cell.setupLayout(messageType: 7)
             }else{
-        if let data = data{
-            cell.myImg.image = UIImage(data: data)
+                cell.RankingLabel.text = "Rank \(indexPath.row-1)"
+                cell.RankingLabel.textColor = .systemGray2
+                cell.setupLayout(messageType: messageType)
+                cell.delegate = self
+                cell.selectionStyle = .none
+                cell.myLabel.text = filteredData[indexPath.row-1].Username
+                let imgPath = filteredData[indexPath.row-1].profileImageUrl
+                cell.uid = filteredData[indexPath.row-1].uid
+                let storageRef = Storage.storage().reference(withPath: imgPath)
+                storageRef.getData(maxSize: 4*1024*1024) { (data, error) in
+                    if let error = error{
+                        print("Got an error fetching data: \(error.localizedDescription)")
+                        return
+                    }else{
+                        if let data = data{
+                            cell.myImg.image = UIImage(data: data)
+                        }
+                    }
+                }
+            }
+        }else{
+            cell.RankingLabel.text = "Rank \(indexPath.row)"
+            cell.RankingLabel.textColor = .systemGray2
+            cell.setupLayout(messageType: messageType)
+            cell.delegate = self
+            cell.myLabel.text = filteredData[indexPath.row].Username
+            let imgPath = filteredData[indexPath.row].profileImageUrl
+            cell.uid = filteredData[indexPath.row].uid
+            let storageRef = Storage.storage().reference(withPath: imgPath)
+            storageRef.getData(maxSize: 4*1024*1024) { (data, error) in
+                if let error = error{
+                    print("Got an error fetching data: \(error.localizedDescription)")
+                    return
+                }else{
+                    if let data = data{
+                        cell.myImg.image = UIImage(data: data)
+                    }
+                }
             }
         }
-    }
         return cell
     }
- 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
@@ -163,6 +238,8 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
             inputFirebase = "Friends"
         }else if(messageType == 5){
             inputFirebase = "Friends"
+        }else if(messageType == 6){
+            inputFirebase = "Friends"
         }
         
         let currentUsr = Auth.auth().currentUser?.uid
@@ -172,24 +249,29 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
         }
         query.getDocuments { (snapshot, err) in
             if let err = err{
-              print("this is the", err)
-              return
+                print("this is the", err)
+                return
             }else{
                 snapshot?.documents.forEach({ (documentSnapshot) in
                     let myUserInfo = documentSnapshot.data()
                     let user = PlayerShort(dictionary: myUserInfo)
                     if self.messageType == 4{
-                    if user.lastMsg == "" || user.lastMsg == nil {
+                        if user.lastMsg == "" || user.lastMsg == nil {
+                            self.fullMessageData.append(user)
+                        }
+                        
+                    }else{
                         self.fullMessageData.append(user)
                     }
-               
-                }else{
-                        self.fullMessageData.append(user)
-                }
                 })
                 self.filteredData = self.fullMessageData
                 self.mytblView.reloadData()
             }
+        }
+    }
+    @objc fileprivate func NextHit(){
+        self.delegate?.addToMap()
+        self.dismiss(animated: true) {
         }
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -198,12 +280,12 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-       searchBar.text = nil
-       searchBar.setShowsCancelButton(false, animated: true)
-       self.filteredData = self.fullMessageData
-       self.mytblView.reloadData()
-       searchBar.endEditing(true)
-   }
+        searchBar.text = nil
+        searchBar.setShowsCancelButton(false, animated: true)
+        self.filteredData = self.fullMessageData
+        self.mytblView.reloadData()
+        searchBar.endEditing(true)
+    }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if(searchText.isEmpty){
             filteredData = fullMessageData
@@ -227,7 +309,11 @@ class plusButtonHitViewController: UIViewController, UISearchBarDelegate, UITabl
         searchBar.backgroundColor = .white
         Friends.font = .boldSystemFont(ofSize: 25)
         view.addSubview(searchBar)
-        searchBar.anchor(top: Friends.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        if(messageType == 6){
+            searchBar.anchor(top: myDatePicker.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        }else{
+            searchBar.anchor(top: Friends.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        }
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = "message friend"
         view.addSubview(mytblView)

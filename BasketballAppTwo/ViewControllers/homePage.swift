@@ -12,7 +12,7 @@ import JGProgressHUD
 
 class homePage: UIViewController, CardViewDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
     var data: [String] = []
-    var filteredData: [String]!
+    var filteredData = [String]()
     let tblview = UITableView()
     let searchBarView = UISearchBar()
     var searchedIsClear = true
@@ -30,16 +30,16 @@ class homePage: UIViewController, CardViewDelegate, UISearchBarDelegate, UITable
         searchUsersFromFirestore()
         filteredData = data
     }
-    var myUser:User!
+    var myUser:User?
     func getMyUser() -> User{
-        return myUser
+        return myUser ?? User(dictionary: ["":""])
     }
     func currentUsrInfo(){
         let currentUsrId = Auth.auth().currentUser?.uid ?? ""
         let db2 = Firestore.firestore().collection("users").document(currentUsrId)
         db2.getDocument { (snapshot, error) in
             let myUserInfo = snapshot?.data()
-            let user = User(dictionary: myUserInfo!)
+            let user = User(dictionary: myUserInfo ?? ["":""])
             self.myUser = user
         }
     }
@@ -95,7 +95,7 @@ class homePage: UIViewController, CardViewDelegate, UISearchBarDelegate, UITable
             let docRef = Firestore.firestore().collection("users").document("\(uid ?? "")")
             docRef.getDocument { (documentSnapshot, error) in
                 let myUserInfo = documentSnapshot?.data()
-                let user = User(dictionary: myUserInfo!)
+                let user = User(dictionary: myUserInfo ?? ["":""])
                 let cardDeck = self.CardViewFromUser(user: user)
                 self.tblview.removeFromSuperview()
                 self.searchBarView.setShowsCancelButton(false, animated: true)
@@ -203,7 +203,26 @@ class homePage: UIViewController, CardViewDelegate, UISearchBarDelegate, UITable
         cardDeckView.uid = user.uid ?? ""
         cardDeckView.UsrName = user.Username ?? ""
         cardDeckView.locationUsername.text = "\(user.Username ?? "")  \(21) \n 22 miles away"
-        cardDeckView.Elo.text = " \(user.Elo ?? 5) \n Some Ranking"
+        var userRating = ""
+        let val = user.Elo
+        if(val ?? 0 >= 2000){
+            userRating = "Hall of Fame"
+        }else if (val ?? 0 >= 1800 && val ?? 0 < 2000){
+            userRating = "All Star"
+        }else if(val ?? 0 >= 1600 && val ?? 0 < 1800){
+            userRating = "Champion"
+        }else if(val ?? 0 >= 1400 && val ?? 0 < 1600){
+            userRating = "Professional"
+        }else if(val ?? 0 >= 1200 && val ?? 0 < 1400){
+            userRating = "Amateur"
+        }else if(val ?? 0 >= 1000 && val ?? 0 < 1200){
+            userRating = "Rookie"
+        }else if(val ?? 0 >= 800 && val ?? 0 < 1000){
+            userRating = "Small-Baller"
+        }else if(val ?? 0 < 800){
+            userRating = "Just Chillin"
+        }
+        cardDeckView.Elo.text = " \(user.Elo ?? 5) \n \(userRating)"
         cardDeckView.imageUrl = user.imageUrl ?? ""
         return cardDeckView
     }
@@ -244,7 +263,7 @@ class homePage: UIViewController, CardViewDelegate, UISearchBarDelegate, UITable
     }
 
     func protocolForGettingTarget() -> CardView {
-        return nextCardInstantiation!
+        return nextCardInstantiation ?? CardView()
     }
     fileprivate lazy var screenSize = UIScreen.main.bounds
     fileprivate lazy var ScreenWidth = ((screenSize.width)+20)
@@ -270,8 +289,8 @@ class homePage: UIViewController, CardViewDelegate, UISearchBarDelegate, UITable
             self.cardDeckHead?.nextCardSetup()
             temp?.lastCardSetup()
             self.cardDeckHead?.previousCard = temp
-            self.myView.addSubview(self.cardDeckHead!.nextCard ?? self.dummycard)
-            self.myView.addSubview(self.cardDeckHead!.previousCard ?? self.dummycard)
+            self.myView.addSubview(self.cardDeckHead?.nextCard ?? self.dummycard)
+            self.myView.addSubview(self.cardDeckHead?.previousCard ?? self.dummycard)
             self.myView.sendSubviewToBack(self.cardDeckHead?.previousCard ?? self.dummycard)
             self.myView.sendSubviewToBack(self.cardDeckHead?.nextCard ?? self.dummycard)
             self.cardDeckHead?.previousCard?.fillSuperview()
@@ -301,8 +320,8 @@ class homePage: UIViewController, CardViewDelegate, UISearchBarDelegate, UITable
             temp?.nextCardSetup()
             self.cardDeckHead?.nextCard = temp
             self.cardDeckHead?.lastCardSetup()
-            self.myView.addSubview(self.cardDeckHead!.nextCard ?? self.dummycard)
-            self.myView.addSubview(self.cardDeckHead!.previousCard ?? self.dummycard)
+            self.myView.addSubview(self.cardDeckHead?.nextCard ?? self.dummycard)
+            self.myView.addSubview(self.cardDeckHead?.previousCard ?? self.dummycard)
             self.myView.sendSubviewToBack(self.cardDeckHead?.nextCard ?? self.dummycard)
             self.myView.sendSubviewToBack(self.cardDeckHead?.previousCard ?? self.dummycard)
             self.cardDeckHead?.nextCard?.fillSuperview()

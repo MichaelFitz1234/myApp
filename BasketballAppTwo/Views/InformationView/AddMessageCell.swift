@@ -13,6 +13,18 @@ protocol AddMsgCellProtocl {
     func reportScoreHit(uid: String)
 }
 class AddMessageCell: UITableViewCell {
+    let myImg4 = UIImage(systemName: "checkmark.square.fill")
+    let myImg5 = UIImage(systemName: "squareshape")
+    var count = 0 {
+        didSet{
+            if(count % 2 == 0){
+                pointingImage.image = myImg5
+            }else{
+                pointingImage.image = myImg4
+            }
+        }
+    }
+    var img3 = UIImage(systemName: "squareshape")
     var delegate: AddMsgCellProtocl?
     var uid:String?
     let myImg = UIImageView()
@@ -147,6 +159,28 @@ class AddMessageCell: UITableViewCell {
             pointingImage.image = img2
             myLabel.backgroundColor = .white
             addSubview(pointingImage)
+            pointingImage.tintColor = .black
+            pointingImage.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 17, left: 10, bottom: 0, right: 8), size: .init(width: 30, height: 30))
+        case 6:
+            img?.withTintColor(.gray)
+            myLabel.backgroundColor = .white
+            addSubview(pointingImage)
+            pointingImage.image = myImg5
+            pointingImage.tintColor = .black
+            pointingImage.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 17, left: 10, bottom: 0, right: 8), size: .init(width: 30, height: 30))
+        case 7:
+            myImg.removeFromSuperview()
+            let selectAllLabel = UILabel()
+            addSubview(selectAllLabel)
+            selectAllLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 20, left: 15, bottom: 0, right: 0))
+            selectAllLabel.font = .boldSystemFont(ofSize: 20)
+            selectAllLabel.textColor = .systemGray3
+            selectAllLabel.text = "Select All"
+            img?.withTintColor(.gray)
+            myLabel.backgroundColor = .white
+            addSubview(pointingImage)
+            pointingImage.image = myImg5
+            pointingImage.tintColor = .black
             pointingImage.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 17, left: 10, bottom: 0, right: 8), size: .init(width: 30, height: 30))
         default:
             print("Message")

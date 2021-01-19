@@ -15,7 +15,7 @@ class UserInformation: UIViewController, UIScrollViewDelegate, UITableViewDelega
     var CurrentUsr:User?
     var currentImg = UIImage()
     var myArrayOfElements = [GameScore]()
-    var Array3 = [PlayerShort]()
+   // var Array3 = [PlayerShort]()
     fileprivate lazy var screenSize = UIScreen.main.bounds
     fileprivate lazy var ScreenWidth = screenSize.width-80
     var myUsr:String = "" {
@@ -45,13 +45,13 @@ class UserInformation: UIViewController, UIScrollViewDelegate, UITableViewDelega
        
     }
     func getGamesFB(){
-        Firestore.firestore().collection("scores").document(myUsr).collection("gameScores").getDocuments{ (snapshot, error) in
-            snapshot?.documents.forEach({ (snapshot) in
-                let myData = snapshot.data()
+        let myRef = Firestore.firestore().collection("scores").document(myUsr).collection("gameScores")
+            myRef.getDocuments{ (snapshot, error) in
+                snapshot?.documents.forEach({ (documentSnapshot) in
+                let myData = documentSnapshot.data()
                 let myScoreDoc = GameScore(dictionary: myData)
                 self.myArrayOfElements.append(myScoreDoc)
             })
-
         }
     }
     //let myCell = ScoreCell(style: .default, reuseIdentifier: "Ugly")
@@ -129,25 +129,28 @@ class UserInformation: UIViewController, UIScrollViewDelegate, UITableViewDelega
         }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = (self.myTable.dequeueReusableCell(withIdentifier: "cell") as! reportScoreCell?)!
+        cell.selectionStyle = .none
         cell.myImg.image = self.currentImg
         cell.myLabel.text = self.CurrentUsr?.Username
-        let a1 = String(myArrayOfElements[indexPath.row].gamesP1 ?? 0)
-        let a2 = String(myArrayOfElements[indexPath.row].gamesP2 ?? 0)
-        let myString:NSString = "Games: \(a1)-\(a2) L" as NSString
+        let a1 = String(myArrayOfElements[indexPath.section].gamesP2 ?? 0)
+        let a2 = String(myArrayOfElements[indexPath.section].gamesP1 ?? 0)
         var myMutableString = NSMutableAttributedString()
-        myMutableString = NSMutableAttributedString(string: myString as String, attributes: [NSAttributedString.Key.font:UIFont(name: "Georgia", size: 18.0)!])
-        if (myArrayOfElements[indexPath.row].gamesP1 ?? 0 > myArrayOfElements[indexPath.row].gamesP2 ?? 0){
+        if (myArrayOfElements[indexPath.section].gamesP1 ?? 0 < myArrayOfElements[indexPath.section].gamesP2 ?? 0){
+            let myString:NSString = "Games: \(a1)-\(a2) W" as NSString
+            myMutableString = NSMutableAttributedString(string: myString as String, attributes: [NSAttributedString.Key.font:UIFont(name: "Georgia", size: 18.0)!])
             myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.green, range: NSRange(location:11,length:1))
         }else {
+            let myString:NSString = "Games: \(a1)-\(a2) L" as NSString
+            myMutableString = NSMutableAttributedString(string: myString as String, attributes: [NSAttributedString.Key.font:UIFont(name: "Georgia", size: 18.0)!])
             myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.red, range: NSRange(location:11,length:1))
         }
         myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: NSRange(location:0,length:10))
         cell.gameScore.attributedText = myMutableString
-        Firestore.firestore().collection("users").document(myArrayOfElements[indexPath.row].player2 ?? "").getDocument{ (snapshot, error) in
+        Firestore.firestore().collection("users").document(myArrayOfElements[indexPath.section].player1 ?? "").getDocument{ (snapshot, error) in
         let data = snapshot?.data()
         let myUsr = User(dictionary: data ?? ["":""])
         //Create Cell Username Elo
-            cell.myLabel2.text = "\(myUsr.Username ?? "") (\(Int(myUsr.Elo ?? 0)))"
+        cell.myLabel2.text = "\(myUsr.Username ?? "") (\(Int(myUsr.Elo ?? 0)))"
         let storageRef = Storage.storage().reference(withPath: myUsr.imageUrl ?? "")
         storageRef.getData(maxSize: 4*1024*1024) { [self] (data, error) in
         if let error = error{
@@ -163,7 +166,21 @@ class UserInformation: UIViewController, UIScrollViewDelegate, UITableViewDelega
         }
         return cell
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {  
-    print("You tapped cell number \(indexPath.row).")
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let messagesView = ViewScore()
+        messagesView.uid = myArrayOfElements[indexPath.section].player1 ?? ""
+        messagesView.myGame =  myArrayOfElements[indexPath.section]
+        messagesView.userUID = myArrayOfElements[indexPath.section].player2 ?? ""
+        messagesView.setupMyUserFromFirebase()
+        messagesView.modalPresentationStyle = .fullScreen
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        present(messagesView, animated: false, completion: nil)
+        
     }
 }

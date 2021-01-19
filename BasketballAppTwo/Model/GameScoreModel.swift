@@ -18,8 +18,8 @@ struct GameScore {
     init(dictionary: [String: Any]) {
         self.player1 = dictionary["player1"] as? String ?? ""
         self.player2 = dictionary["player2"] as? String ?? ""
-        self.Player1Score = dictionary["Player1Score"] as? [Int] ?? [0]
-        self.Playet2Score = dictionary["Player2Score"] as? [Int] ?? [0]
+        self.Player1Score = dictionary["player1Score"] as? [Int] ?? [0]
+        self.Playet2Score = dictionary["player2Score"] as? [Int] ?? [0]
         self.gamesP1 = dictionary["gamesP1"] as? Int ?? 0
         self.gamesP2 = dictionary["gamesP2"] as? Int ?? 0
     }

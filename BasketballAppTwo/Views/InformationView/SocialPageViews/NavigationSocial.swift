@@ -95,7 +95,7 @@ class NavigationSocial: UIView {
         delegate?.editProfileHit()
     }
     @objc fileprivate func infoButtonHit(){
-        if let url = URL(string: "https://www.google.com"),
+        if let url = URL(string: "https://www.andone.app/about"),
                 UIApplication.shared.canOpenURL(url) {
                     UIApplication.shared.open(url, options: [:])
         }
@@ -105,7 +105,7 @@ class NavigationSocial: UIView {
     }
      
     @objc fileprivate func abAndOne(){
-        if let url = URL(string: "https://www.google.com"),
+        if let url = URL(string: "https://www.andone.app/about"),
                 UIApplication.shared.canOpenURL(url) {
                     UIApplication.shared.open(url, options: [:])
         }
