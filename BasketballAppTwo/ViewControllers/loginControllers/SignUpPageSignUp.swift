@@ -10,11 +10,13 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 import JGProgressHUD
+import CoreLocation
+import GeoFire
 protocol signedUp {
     func removed()
     func signUpHit()
 }
-class SignUpPageSignUp: UIViewController {
+class SignUpPageSignUp: UIViewController, CLLocationManagerDelegate {
     let myImage = UIButton()
     let DOB = UIDatePicker()
     var delegate: signedUp?
@@ -26,9 +28,24 @@ class SignUpPageSignUp: UIViewController {
     var imagePicker: ImagePicker!
     let registeringHUD = JGProgressHUD(style: .dark)
     var booleanImageHit = false
+    var locationManager = CLLocationManager()
+    var lon: Double?
+    var lat: Double?
+    var location:CLLocationCoordinate2D?
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager.delegate = self;
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
         setupLayout()
+    }
+ 
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        lon = locValue.longitude
+        lat = locValue.latitude
+        location = locValue
     }
     
     fileprivate func setupLayout() {
@@ -108,15 +125,58 @@ class SignUpPageSignUp: UIViewController {
     
     //this is used for the send confirmation Email
     fileprivate func allGOO2(){
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Uploading Profile"
+        hud.show(in: self.view)
         let email1 = email.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = phoneNumber.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let dateOfBirth = DOB.date
+        let Username = username.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         Auth.auth().createUser(withEmail: email1, password: password) { (result, err) in
             if(err != nil){
                 self.showHUDWithError(error: err!)
                 return
             }
+            let currentUsrId = Auth.auth().currentUser?.uid
+            let db = Firestore.firestore().collection("Users")
+            let geoDb = Firestore.firestore().collection("GeoPoint")
+            let dbEmail = Firestore.firestore().collection("Emails")
+            //this is with location
+            let myGeoPoint = GeoPoint(latitude: self.lat ?? 0.0, longitude: self.lon ?? 0.0)
+            let hash = GFUtils.geoHash(forLocation: self.location ?? CLLocationCoordinate2D(latitude: self.lat ?? 0, longitude: self.lon ?? 0))
+            let areaHash = String(hash.prefix(5))
+            let randomID = UUID.init().uuidString
+            let storageRef = Storage.storage().reference(withPath: "usr/\(randomID).jpg")
+            //adds the picture to my firebase Storage
+            //adds teh firebase storage
+            let searchableIndex = self.createIndex(title: Username)
+            let date = Date()
+            db.document(currentUsrId ?? "").setData(["dateOfBirth": dateOfBirth , "username": Username, "currElo": 1200, "uid": currentUsrId ?? "", "imagePath": "usr/\(randomID).jpg", "location": myGeoPoint, "searchIndex": searchableIndex])
+            geoDb.document(areaHash).setData(["userIds": FieldValue.arrayUnion([Auth.auth().currentUser?.uid ?? ""]), "geohash": areaHash], merge: true)
+            db.document(currentUsrId ?? "").collection("Social").document(currentUsrId ?? "").setData(["uid" : currentUsrId ?? "", "searchIndex" : searchableIndex, "username": Username, "imagePath" : "usr/\(randomID).jpg", "relationship": "currentUsr",  "timestamp": date])
+            dbEmail.document(currentUsrId ?? "").setData(["email": email1])
+            let someImage = self.myImage.image(for: .normal)
+            guard let imageData = someImage?.jpegData(compressionQuality: 0.75) else {return}
+            let uploadMetadata = StorageMetadata.init()
+            uploadMetadata.contentType = "image/jpeg"
+            storageRef.putData(imageData, metadata: uploadMetadata) { (downloadMetadata, error) in
+              if let err = err{
+                  self.showHUDWithError(error: err )
+                  return
+              }
+            hud.dismiss()
             self.delegate?.signUpHit()
+          }
         }
+    }
+    fileprivate func createIndex(title: String) -> [String] {
+        var searchableIndex = [String]()
+        let myLength = title.count
+        for index in 1...myLength{
+            let myString = String(title.prefix(index))
+            searchableIndex.append(myString)
+        }
+        return searchableIndex
     }
     //this show the hud and the error
     fileprivate func showHUDWithError(error: Error) {
@@ -244,56 +304,3 @@ extension SignUpPageSignUp: ImagePickerDelegate {
     }
 }
 
-
-
-
-//    fileprivate func allSingInGood(){
-//        let dateOfBirth = DOB.date
-//        let Username = username.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-//        let email1 = email.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-//        let password = phoneNumber.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-//        Auth.auth().createUser(withEmail: email1, password: password) { (result, err) in
-//            if(err != nil){
-//                self.showHUDWithError(error: err!)
-//                return
-//                //show the error to the user
-//            }else{
-//                let uid = Auth.auth().currentUser?.uid as String?
-//                //add to firebase database database reference
-//                let db = Firestore.firestore()
-//                //adds the picture to my firebase Storage
-//                db.collection("users").document("\(result!.user.uid)").setData(["DOB": dateOfBirth , "email": email1, "username": Username, "currElo": 1200, "uid": uid ?? "", ])
-//                db.collection("Usernames").document("\(Username)").setData(["Username": Username, "uid": uid ?? ""])
-//                let docRef = db.collection("users").document("\(result!.user.uid)")
-//                let docRefTwo = db.collection("Usernames").document("\(Username)")
-//                let randomID = UUID.init().uuidString
-//                docRefTwo.updateData(["imagePath" : "usr/\(randomID).jpg"]) { (error) in
-//                    if error != nil {
-//                        // Show error message
-//                        self.showHUDWithError(error: error!)
-//                    }
-//                }
-//                docRef.updateData(["imagePath" : "usr/\(randomID).jpg"]) { (error) in
-//                    if error != nil {
-//                        // Show error message
-//                        self.showHUDWithError(error: error!)
-//                    }
-//                }
-//                let uploadRef = Storage.storage().reference(withPath: "usr/\(randomID).jpg")
-//                let someImage = self.myImage.image(for: .normal)
-//                guard let imageData = someImage?.jpegData(compressionQuality: 0.75) else {return}
-//                let uploadMetadata = StorageMetadata.init()
-//                uploadMetadata.contentType = "image/jpeg"
-//                uploadRef.putData(imageData, metadata: uploadMetadata) { (downloadMetadata, error) in
-//                    if let err = err{
-//                        self.showHUDWithError(error: err )
-//                        return
-//                    }
-//                    print("great job uploaded \(String(describing: downloadMetadata))")
-//                }
-//
-//            }
-//
-//            self.delegate?.signUpHit()
-//        }
-//    }

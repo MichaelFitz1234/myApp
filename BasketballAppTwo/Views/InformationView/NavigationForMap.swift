@@ -5,16 +5,26 @@
 //  Created by Michael  on 1/9/21.
 //
 import UIKit
+import FirebaseStorage
 protocol NavigationSocialDelegateMap {
     func CreateChallenge()
     func addATournament()
     func reportAScore()
 }
 class NavigationSocialForMap: UIView {
-    var PicImage = UIImage(imageLiteralResourceName: "Image"){
+    var PicImage = ""{
         didSet{
-            self.profilePic.image = PicImage
-        }
+            let storageRef = Storage.storage().reference(withPath: PicImage ?? "")
+            storageRef.getData(maxSize: 4*1024*1024) { (data, error) in
+                if let error = error{
+                    print("Got an error fetching data: \(error.localizedDescription)")
+                    return
+                }else{
+                    if let data = data{
+                        self.profilePic.image = UIImage(data: data)
+                    }
+                }
+            }        }
     }
     var delegate: NavigationSocialDelegateMap?
     override init(frame: CGRect) {
@@ -27,13 +37,6 @@ class NavigationSocialForMap: UIView {
     }
     let profilePic = UIImageView()
     fileprivate func setupLayout(){
-//        let playButtonImage = UIImage(systemName: "gearshape.fill")
-//        playButtonImage?.withTintColor(.gray)
-//        let playButtonImageField = UIImageView()
-//        playButtonImageField.tintColor = .white
-//        playButtonImageField.image = playButtonImage
-        let username = UILabel()
-        let Elo = UILabel()
         let editProfile = UIButton(type: .system)
         editProfile.titleLabel?.textColor = .white
         editProfile.titleLabel?.tintColor = .white
@@ -53,10 +56,7 @@ class NavigationSocialForMap: UIView {
         editProfile.anchor(top: topAnchor, leading: profilePic.trailingAnchor, bottom: nil, trailing: nil , padding: .init(top: 38, left: 10, bottom: 0, right: 0),size: .init(width: 150, height: 30))
         editProfile.setTitle("Create A Challenge", for: .normal)
         editProfile.backgroundColor = .systemGray
-        //editProfile.setTitleColor(.darkGray, for: .normal)
         editProfile.layer.cornerRadius = 7
-//        editProfile.addSubview(playButtonImageField)
-//        playButtonImageField.anchor(top: editProfile.topAnchor, leading: editProfile.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 8, left: -24, bottom: 0, right: 0),size: .init(width: 15, height: 15))
         addSubview(playButton)
         let aboutAndOne = UIButton(type: .system)
         aboutAndOne.setTitle("Tournament", for: .normal)

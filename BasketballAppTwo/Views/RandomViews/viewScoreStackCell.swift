@@ -8,7 +8,6 @@
 import UIKit
 
 class viewScoreStackCell: UIView {
-
     let score2 = UILabel()
     let score1 = UILabel()
     let game = UILabel()
@@ -16,7 +15,6 @@ class viewScoreStackCell: UIView {
     let username2 = UILabel()
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
     }
     var scoreValue = 0{
         didSet{

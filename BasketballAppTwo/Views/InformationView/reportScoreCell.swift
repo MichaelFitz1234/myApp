@@ -47,13 +47,15 @@ class reportScoreCell: UITableViewCell {
         addSubview(myLabel)
         addSubview(myLabel2)
         addSubview(myLabel3)
-        myLabel.anchor(top: backgroundView.topAnchor, leading: myImg.trailingAnchor, bottom: nil, trailing: nil,padding: .init(top: 12, left: 2, bottom: 0, right: 0))
+        myLabel.anchor(top: backgroundView.topAnchor, leading: myImg.trailingAnchor, bottom: nil, trailing: myImg2.leadingAnchor,padding: .init(top: 12, left: 0, bottom: 0, right: 0))
         myLabel.textColor = .white
-        myLabel2.anchor(top: backgroundView.topAnchor, leading: nil, bottom: nil, trailing: myImg2.leadingAnchor,padding: .init(top: 12, left: 0, bottom: 0, right: 2))
-        myLabel2.textColor = .white
-        myLabel3.anchor(top: backgroundView.topAnchor, leading: myLabel.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 14, left: 10, bottom: 0, right: 0))
-        myLabel3.text = "Vs."
-        myLabel3.textColor = .white
+        myLabel.adjustsFontSizeToFitWidth = true
+        myLabel.textAlignment = .center
+//        myLabel2.anchor(top: backgroundView.topAnchor, leading: nil, bottom: nil, trailing: myImg2.leadingAnchor,padding: .init(top: 12, left: 0, bottom: 0, right: 2))
+//        myLabel2.textColor = .white
+//        myLabel3.anchor(top: backgroundView.topAnchor, leading: myLabel.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 14, left: 10, bottom: 0, right: 0))
+//        myLabel3.text = "Vs."
+//        myLabel3.textColor = .white
         addSubview(gameScore)
         gameScore.anchor(top: myLabel.bottomAnchor, leading: myLabel.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 5, left: 55, bottom: 0, right: 0))
         // set the text from the data model

@@ -54,6 +54,7 @@ class LoginPageViewController: UIViewController {
         password.autocapitalizationType = .none
         forgotPassworld.addTarget(self, action: #selector(resetPassword), for: .touchUpInside)
         //setting up of views below
+        password.isSecureTextEntry = true
         emailImage.image = emailPersonImg
         passwordImage.image = passwordLockImg
         andOne.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: 50, left: ScreenWidth/2.5, bottom: 0, right: 0))
@@ -137,7 +138,7 @@ class LoginPageViewController: UIViewController {
         }
     }
     @objc func resetPassword(){
-        let myPswrd = passwordReset()
+        let myPswrd = PasswordReset()
         present(myPswrd, animated: true, completion: nil)
     }
     

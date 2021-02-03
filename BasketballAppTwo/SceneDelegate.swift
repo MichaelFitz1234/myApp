@@ -16,16 +16,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
          //Create a MainViewController
-//        let firebaseAuth = Auth.auth()
-//    do {
-//      try firebaseAuth.signOut()
-//    } catch let signOutError as NSError {
-//      print ("Error signing out: %@", signOutError)
-//    }
+        let firebaseAuth = Auth.auth()
+        do {
+          try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+          print ("Error signing out: %@", signOutError)
+        }
         let myRoot = LoginOrSignUpViewController()
-        let mainView = manageScreens(rootViewController: myRoot)
+        let mainView = ManageScreens(rootViewController: myRoot)
         myRoot.delegate = mainView
-        //let mainView = passwordReset()
         self.window?.rootViewController = mainView
         self.window?.makeKeyAndVisible()
      }

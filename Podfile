@@ -13,7 +13,8 @@ target 'BasketballAppTwo' do
   pod 'JGProgressHUD'
   pod 'IQKeyboardManagerSwift'
   pod 'SDWebImage'
-  target 'BasketballAppTwoTests' do
+  pod 'GeoFire/Utils'  
+    target 'BasketballAppTwoTests' do
     inherit! :search_paths
     # Pods for testing
   end
